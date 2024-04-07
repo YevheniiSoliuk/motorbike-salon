@@ -6,6 +6,9 @@ import * as Joi from 'joi';
 import { DataSource } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FirebaseModule } from './firebase/firebase.module';
+import { DiscountsModule } from './discounts/discounts.module';
+import { CategoriesModule } from './categories/categories.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -42,14 +45,17 @@ import { FirebaseModule } from './firebase/firebase.module';
         port: configService.get<number>('POSTGRES_PORT'),
         password: configService.get<string>('POSTGRES_PASSWORD'),
         username: configService.get<string>('POSTGRES_USER'),
-        entities: [],
         database: configService.get<string>('POSTGRES_DB'),
+        autoLoadEntities: true,
         synchronize: true,
         logging: true,
       }),
       inject: [ConfigService],
     }),
     FirebaseModule,
+    DiscountsModule,
+    CategoriesModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,7 +1,16 @@
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { authenticate } from './auth';
-import dotenv from 'dotenv';
+
+import Discount from 'src/discounts/entities/discount.entity';
+import Product from 'src/products/entities/product.entity';
+import Category from 'src/categories/entities/category.entity';
+import Model from 'src/products/models/model.entity';
+import Image from 'src/products/images/image.entity';
+
 import { dataSource } from '../database/data-source';
+import { locale } from './locale';
+import { authenticate } from './auth';
+
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -20,7 +29,8 @@ export default async function initAdminPanel(
 
   const AdminJSExpress = await import('@adminjs/express');
   const adminPanel = new AdminJS({
-    resources: [],
+    resources: [Discount, Category, Product, Image, Model],
+    locale: locale,
   });
   const authOptions = {
     authenticate,

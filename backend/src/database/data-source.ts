@@ -1,5 +1,10 @@
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
+import Discount from 'src/discounts/entities/discount.entity';
+import Category from 'src/categories/entities/category.entity';
+import Product from 'src/products/entities/product.entity';
+import Model from 'src/products/models/model.entity';
+import Image from 'src/products/images/image.entity';
 
 dotenv.config();
 
@@ -10,6 +15,6 @@ export const dataSource: DataSource = new DataSource({
   username: process.env['POSTGRES_USER'],
   password: process.env['POSTGRES_PASSWORD'],
   database: process.env['POSTGRES_DB'],
-  entities: [],
+  entities: [Discount, Category, Product, Image, Model],
   logging: true,
 });
