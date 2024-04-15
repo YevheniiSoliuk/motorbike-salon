@@ -7,5 +7,6 @@ import { ConfigModule } from '@nestjs/config';
   imports: [ConfigModule],
   controllers: [FirebaseController],
   providers: [FirebaseService],
+  exports: [FirebaseService],
 })
 export class FirebaseModule {}

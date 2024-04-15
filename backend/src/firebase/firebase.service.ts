@@ -1,18 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import {
   FirebaseStorage,
-  StorageReference,
+  getDownloadURL,
   getStorage,
   ref,
+  uploadBytesResumable,
 } from 'firebase/storage';
 import { ConfigService } from '@nestjs/config';
+import { unsubscribe } from 'diagnostics_channel';
 
 @Injectable()
 export class FirebaseService {
   private app: FirebaseApp;
   private storage: FirebaseStorage;
-  private modelsRef: StorageReference;
 
   constructor(private readonly configService: ConfigService) {
     const firebaseConfig = {
@@ -30,6 +35,50 @@ export class FirebaseService {
 
     this.app = initializeApp(firebaseConfig);
     this.storage = getStorage();
-    this.modelsRef = ref(this.storage, 'models');
+  }
+
+  async uploadFileToStorage(
+    file: Express.Multer.File,
+    fullFileName: string,
+  ): Promise<string> {
+    const modelRef = ref(this.storage, `models/${fullFileName}`);
+    const uploadTask = uploadBytesResumable(modelRef, file.buffer);
+    let downloadURL = '';
+
+    var unsubscribe = uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
+        }
+        unsubscribe();
+      },
+      (error) => {
+        switch (error.code) {
+          case 'storage/unauthorized':
+            throw new UnauthorizedException();
+          case 'storage/canceled':
+            throw new InternalServerErrorException(
+              'File uploading has been canceled',
+            );
+          case 'storage/unknown':
+            new InternalServerErrorException();
+        }
+      },
+      async () => {
+        downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        console.log('File available at', downloadURL);
+      },
+    );
+
+    return downloadURL;
   }
 }

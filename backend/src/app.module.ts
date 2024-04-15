@@ -9,6 +9,7 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { DiscountsModule } from './discounts/discounts.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
+import { ModelsModule } from './models/models.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { ProductsModule } from './products/products.module';
     DiscountsModule,
     CategoriesModule,
     ProductsModule,
+    ModelsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsUrl } from 'class-validator';
-import ProductDto from '../dto/product.dto';
+import ProductDto from '../../products/dto/product.dto';
 
 export default class ModelDto {
   id: number;
@@ -11,6 +11,14 @@ export default class ModelDto {
   @ApiProperty()
   @IsUrl()
   url: string;
+
+  storageKey: string;
+
+  bucket: string;
+
+  mime: string;
+
+  comment: string | null;
 
   @ApiPropertyOptional({ type: ProductDto })
   @IsOptional()

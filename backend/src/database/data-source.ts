@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import Discount from 'src/discounts/entities/discount.entity';
 import Category from 'src/categories/entities/category.entity';
 import Product from 'src/products/entities/product.entity';
-import Model from 'src/products/models/model.entity';
+import Model from 'src/models/entities/model.entity';
 import Image from 'src/products/images/image.entity';
 
 dotenv.config();
