@@ -1,0 +1,268 @@
+$color: #525763;
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&display=swap");
+body {
+  font-family: "Open Sans", sans-serif;
+}
+.mobileLogo {
+  display: none;
+}
+.color {
+  width: 200px;
+  height: 200px;
+  background-color: aqua;
+}
+.canvas-container {
+  width: 500px;
+  height: 500px;
+}
+.cSecond {
+  background-color: $color;
+}
+.hide {
+  visibility: hidden;
+}
+li {
+  list-style-type: none;
+  margin-top: 90px;
+}
+.topBarWrapper {
+  /*display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 15%;
+  font-size: 23px;*/
+  display: flex;
+
+  margin: 10px 0;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.logo img {
+  width: 128px;
+  height: 128px;
+}
+
+.logo {
+  position: relative;
+}
+.topBarWrapper li {
+  list-style: none;
+  margin: 0 20px;
+}
+.topBarOption {
+  font-size: 20px;
+}
+.headerText {
+  position: relative;
+  top: 35%;
+}
+@media only screen and (max-width: 900px) {
+  .topBarWrapper {
+    flex-direction: column;
+  }
+  nav[role="custom-dropdown"] ul {
+    padding-left: 47% !important;
+  }
+  .topBarWrapper li {
+    margin: 20px 20px !important ;
+  }
+}
+/*
+*/
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0.75em;
+}
+
+/* Advanced Checkbox Hack 
+body {
+  -webkit-animation: bugfix infinite 1s;
+}
+@-webkit-keyframes bugfix {
+  from {
+    padding: 0;
+  }
+  to {
+    padding: 0;
+  }
+}*/
+
+input[type="checkbox"] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+label {
+  display: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* custom-dropdown */
+nav[role="custom-dropdown"] {
+  position: relative;
+  width: 100%;
+
+  a,
+  label {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font: 1.4em sans-serif;
+    transition: color 0.3s ease-in-out;
+  }
+
+  ul {
+    width: 100%;
+    list-style: none;
+
+    > li {
+      float: left;
+      padding-top: 2.55em;
+      width: 50%;
+
+      text-align: center;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-in-out;
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  #list {
+    justify-content: space-around !important;
+  }
+  .logo {
+    display: none;
+  }
+  .mobileMenuWrapper {
+    margin-top: 47px;
+    display: flex;
+  }
+  .mobileLogo {
+    width: 128px;
+    height: 128px;
+    display: block;
+    margin-right: 90px;
+  }
+  .navBar {
+    position: relative;
+    top: 50px;
+    justify-content: space-between;
+    // left: 50px;
+    left: 40px;
+
+    z-index: 1;
+
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .navBar a {
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+  }
+
+  .navBar input {
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: 0px;
+    left: 2px;
+
+    cursor: pointer;
+
+    opacity: 0;
+    z-index: 2;
+
+    -webkit-touch-callout: none;
+  }
+
+  .navBar span {
+    display: block;
+    width: 50px;
+    height: 10px;
+    margin-bottom: 5px;
+    position: relative;
+
+    background: #cdcdcd;
+    border-radius: 3px;
+
+    z-index: 1;
+
+    transform-origin: 4px 0px;
+
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+      background-color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+  }
+
+  .navBar span:first-child {
+    transform-origin: 0% 0%;
+  }
+
+  .navBar span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+  }
+
+  .navBar input:checked ~ span {
+    opacity: 1;
+    transform: rotate(45deg) translate(-2px, -1px);
+    background: #232323;
+  }
+
+  .navBar input:checked ~ span:nth-last-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+  }
+
+  .navBar input:checked ~ span:nth-last-child(2) {
+    transform: rotate(-45deg) translate(0, -1px);
+  }
+
+  .topBarWrapper {
+    position: absolute;
+    width: 103vw !important;
+    margin: -140px 0 0 -50px;
+    padding: 50px;
+    padding-top: 150px;
+
+    background: #ededed;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+
+    transform-origin: 0% 0%;
+    transform: translate(-100%, 0);
+    height: 109vh;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  }
+
+  .topBarWrapper li {
+    padding: 10px 0;
+    font-size: 28px;
+  }
+  a {
+    font-size: 25px;
+  }
+
+  .navBar input:checked ~ ul {
+    transform: none;
+  }
+}
+@media only screen and (max-width: 1250px) and( min-width:900px) {
+  #list {
+    justify-content: space-around !important;
+  }
+}

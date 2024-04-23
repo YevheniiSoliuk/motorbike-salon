@@ -1,0 +1,21 @@
+.photo {
+  width: 500px;
+  height: 300px;
+}
+
+#list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0px 10%;
+  font-size: 19px;
+}
+/*# sourceMappingURL=ListModule.css.map */

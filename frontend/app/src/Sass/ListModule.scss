@@ -1,0 +1,15 @@
+$photoheight: 300px;
+$photowidth: 500px;
+.photo {
+  width: $photowidth;
+  height: $photoheight;
+}
+#list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0px 10%;
+
+  font-size: 19px;
+}
