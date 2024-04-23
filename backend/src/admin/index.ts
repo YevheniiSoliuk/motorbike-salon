@@ -11,12 +11,16 @@ import { locale } from './locale';
 import { authenticate } from './auth';
 
 import dotenv from 'dotenv';
-import { GCP_STORAGE_BUCKET, MAX_MODEL_FILE_SIZE } from './constants';
+import {
+  GCP_STORAGE_BUCKET,
+  MAX_MODEL_FILE_SIZE,
+  GCP_SERVICE_ACCOUNT,
+} from './constants';
 
 dotenv.config();
 
 const GCScredentials = {
-  //serviceAccount: 'SERVICE_ACCOUNT',
+  serviceAccount: GCP_SERVICE_ACCOUNT,
   bucket: GCP_STORAGE_BUCKET,
   expires: 0,
 };
@@ -50,7 +54,7 @@ export default async function initAdminPanel(
             componentLoader: componentLoader,
             provider: { gcp: GCScredentials },
             validation: {
-              //mimeTypes: ['application/octet-stream'],
+              // mimeTypes: ['model/gltf-binary'],
               maxSize: MAX_MODEL_FILE_SIZE,
             },
             properties: { key: 'models' },

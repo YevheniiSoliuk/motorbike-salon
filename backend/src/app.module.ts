@@ -33,6 +33,8 @@ import { ModelsModule } from './models/models.module';
         FIREBASE_APP_MESSAGING_SENDER_ID: Joi.string().required(),
         FIREBASE_APP_ID: Joi.string().required(),
 
+        GC_SERVICE_ACCOUNT: Joi.string().required(),
+
         ADMIN_PANEL_EMAIL: Joi.string().required(),
         ADMIN_PANEL_PASSWORD: Joi.string().required(),
         ADMIN_PANEL_COOKIE_SECRET: Joi.string().required(),
