@@ -5,11 +5,13 @@ import {
   Generated,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import ProductDto from '../dto/product.dto';
 import Category from 'src/categories/entities/category.entity';
 import Discount from 'src/discounts/entities/discount.entity';
+import Model from 'src/models/entities/model.entity';
 
 @Entity()
 export default class Product extends BaseEntity implements ProductDto {
@@ -39,4 +41,7 @@ export default class Product extends BaseEntity implements ProductDto {
   @ManyToOne(() => Discount)
   @JoinColumn({ name: 'discountId', referencedColumnName: 'id' })
   discount: Discount;
+
+  @OneToMany(() => Model, (model) => model.product)
+  models: Model[];
 }

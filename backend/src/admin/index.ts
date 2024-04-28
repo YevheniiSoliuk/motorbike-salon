@@ -16,6 +16,9 @@ import {
   MAX_MODEL_FILE_SIZE,
   GCP_SERVICE_ACCOUNT,
 } from './constants';
+import { generateModelFileName, getFileExtension } from 'src/models/utils';
+import { FirebaseService } from 'src/firebase/firebase.service';
+import { ConfigService } from '@nestjs/config';
 
 dotenv.config();
 
@@ -30,7 +33,7 @@ export default async function initAdminPanel(
 ): Promise<void> {
   await dataSource.initialize();
 
-  const { AdminJS, ComponentLoader } = await import('adminjs');
+  const { AdminJS, ComponentLoader, buildFeature } = await import('adminjs');
   const AdminJSTypeorm = await import('@adminjs/typeorm');
   const uploadFeature = await import('@adminjs/upload');
   const componentLoader = new ComponentLoader();
@@ -39,6 +42,35 @@ export default async function initAdminPanel(
     Resource: AdminJSTypeorm.Resource,
     Database: AdminJSTypeorm.Database,
   });
+
+  const someAfterHook = async (res, req, context) => {
+    const { id } = context.record.params;
+    const filename = req.files['file.0'].name;
+    const config = new ConfigService();
+    const firebase = new FirebaseService(config);
+    const link = await firebase.getFileLink(filename);
+
+    await dataSource.getRepository('model').update(
+      {
+        id,
+      },
+      {
+        url: link,
+      },
+    );
+
+    return res;
+  };
+
+  const uploadFileFeature = (config = {}) => {
+    return buildFeature({
+      actions: {
+        new: {
+          after: [someAfterHook],
+        },
+      },
+    });
+  };
 
   const AdminJSExpress = await import('@adminjs/express');
   const adminPanel = new AdminJS({
@@ -57,8 +89,15 @@ export default async function initAdminPanel(
               // mimeTypes: ['model/gltf-binary'],
               maxSize: MAX_MODEL_FILE_SIZE,
             },
-            properties: { key: 'models' },
+            properties: {
+              key: 'key',
+              bucket: 'models',
+            },
+            uploadPath: (record, filename) => {
+              return `models/${filename}`;
+            },
           }),
+          uploadFileFeature({}),
         ],
       },
     ],

@@ -1,17 +1,19 @@
-import { useState } from "react";
-import SubMenu from "./SubMenu";
-import Price from "./Price";
-import Photo from "./Photo";
-import Summary from "../Summary";
-import App from "../App";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import SubMenu from './SubMenu';
+import Price from './Price';
+import Photo from './Photo';
+import Summary from '../Summary';
+import App from '../App';
+import { Link } from 'react-router-dom';
 import {
   Route,
   Switch,
   HashRouter,
   BrowserRouter as Router,
-} from "react-router-dom";
-import "../Sass/Product.scss";
+} from 'react-router-dom';
+import '../Sass/Product.scss';
+import Model from './Model';
+import { Product, fetchProductById } from '../api/products';
 
 interface TestProps {
   order?: {
@@ -75,13 +77,21 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
     setClearSecondMenu(flag);
   };
 
+  const [product, setProduct] = useState<Product | null>(null);
+  useEffect(() => {
+    (async () => {
+      const { data: product } = await fetchProductById(5);
+      setProduct(product);
+    })();
+  }, []);
+
   return (
     <>
       <HashRouter basename={process.env.PUBLIC_URL}>
         <Switch>
-          <Route path={"/" + order.model}>
-            <div className="titlePriceWrapper">
-              <h1 className="model-title">{order.model}</h1>
+          <Route path={'/' + order.model}>
+            <div className='titlePriceWrapper'>
+              <h1 className='model-title'>{order.model}</h1>
 
               <Price
                 firstPrice={firstMenuPrice}
@@ -90,29 +100,32 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                 orderPriceChange={handleOrderPriceChange}
               />
             </div>
-            <Link to="/models" className="goBack">
-              <img src="photos/more.png" alt="models" id="moreIcon" />
+            <Link to='/models' className='goBack'>
+              <img src='photos/more.png' alt='models' id='moreIcon' />
               <span>Modele</span>
             </Link>
-            <div className="contentContainer">
-              <div className="imageWrapper">
+            <div className='contentContainer'>
+              <div className='imageWrapper'>
                 <Photo photo={photo} />
+                {/* <Model
+                  modelUrl={product?.models[1].url ?? '/assets/scene.glb'}
+                /> */}
               </div>
-              <div className="configWrapper">
-                <div className="marginConfig">
-                  <h2 className="configHeader">Konfiguracja</h2>
-                  <hr className="headerLine" />
-                  <div className="headerContainer">
+              <div className='configWrapper'>
+                <div className='marginConfig'>
+                  <h2 className='configHeader'>Konfiguracja</h2>
+                  <hr className='headerLine' />
+                  <div className='headerContainer'>
                     <h3 onClick={() => toggle(2)}>Colors</h3>
                     <span
-                      className="clearConfig"
+                      className='clearConfig'
                       onClick={handleClearFirstSelectedOptions}
                     >
                       Wyczyść
                     </span>
                   </div>
-                  <hr className="miniHeaderLine" />
-                  <div className="dropdownWrapper">
+                  <hr className='miniHeaderLine' />
+                  <div className='dropdownWrapper'>
                     {secondMenu ? (
                       <SubMenu
                         price={handleFirstMenuPriceChange}
@@ -123,17 +136,17 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                       />
                     ) : null}
                   </div>
-                  <div className="headerContainer">
+                  <div className='headerContainer'>
                     <h3 onClick={() => toggle(3)}>Dodatkowe opcje</h3>
                     <span
-                      className="clearConfig"
+                      className='clearConfig'
                       onClick={handleClearSecondSelectedOptions}
                     >
                       Wyczyść
                     </span>
                   </div>
-                  <hr className="miniHeaderLine" />
-                  <div className="dropdownWrapper">
+                  <hr className='miniHeaderLine' />
+                  <div className='dropdownWrapper'>
                     {thirdMenu ? (
                       <SubMenu
                         price={handleSecondMenuPriceChange}
@@ -148,28 +161,28 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
               </div>
             </div>
 
-            <div id="dropdownContainer">
+            <div id='dropdownContainer'>
               <h3 onClick={() => toggle(1)}>Opis</h3>
-              <hr className="headerLine" />
-              <div className="flexButton">
-                <div className="dropdownWrapper">
-                  <p className="model-description">
+              <hr className='headerLine' />
+              <div className='flexButton'>
+                <div className='dropdownWrapper'>
+                  <p className='model-description'>
                     {firstMenu ? (
                       <SubMenu content={order.description[0].description} />
                     ) : null}
                   </p>
                 </div>
-                <Link to="/summary" className="goSummary">
-                  <button className="button-66">Go to Summary</button>
+                <Link to='/summary' className='goSummary'>
+                  <button className='button-66'>Go to Summary</button>
                 </Link>
               </div>
             </div>
           </Route>
 
-          <Route exact path={"/models"}>
+          <Route exact path={'/models'}>
             <App />
           </Route>
-          <Route exact path={"/summary"}>
+          <Route exact path={'/summary'}>
             <Summary order={order} price={orderPrice} />
           </Route>
         </Switch>
