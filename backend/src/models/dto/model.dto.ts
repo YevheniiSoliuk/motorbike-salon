@@ -12,14 +12,6 @@ export default class ModelDto {
   @IsUrl()
   url: string;
 
-  storageKey: string;
-
-  bucket: string;
-
-  mime: string;
-
-  comment: string | null;
-
   @ApiPropertyOptional({ type: ProductDto })
   @IsOptional()
   product: ProductDto;

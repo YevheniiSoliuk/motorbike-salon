@@ -20,18 +20,6 @@ export default class Model extends BaseEntity implements ModelDto {
   @Column('varchar', { unique: true, nullable: false })
   url: string;
 
-  @Column('varchar', { unique: true, nullable: false })
-  storageKey: string;
-
-  @Column('varchar', { unique: true, nullable: false })
-  bucket: string;
-
-  @Column('varchar', { unique: true, nullable: false })
-  mime: string;
-
-  @Column('varchar')
-  comment: string | null;
-
   @ManyToOne(() => Product)
   @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
   product: Product;

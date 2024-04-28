@@ -23,11 +23,18 @@ export class ProductsService {
   }
 
   async findAll() {
-    return await this.productRepository.find();
+    return await this.productRepository.find({
+      relations: ['category', 'discount', 'models'],
+    });
   }
 
   async findOneById(id: number) {
-    return await this.productRepository.findOneBy({ id });
+    return await this.productRepository.findOne({
+      relations: ['category', 'discount', 'models'],
+      where: {
+        id,
+      },
+    });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {

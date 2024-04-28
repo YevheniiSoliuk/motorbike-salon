@@ -1,5 +1,5 @@
-import "../Sass/SubMenu.scss";
-import { useEffect } from "react";
+import '../Sass/SubMenu.scss';
+import { useEffect } from 'react';
 
 const SubMenu = ({
   content,
@@ -50,7 +50,7 @@ const SubMenu = ({
 
     //setOptionList(() => tab);
   };
-  if (typeof content === "string") {
+  if (typeof content === 'string') {
     return <>{content}</>;
   } else {
     return (
@@ -58,7 +58,7 @@ const SubMenu = ({
         {optionList.map((item: any) => {
           return (
             <div
-              className={`box ${!item.active ? "" : "active"}`}
+              className={`box ${!item.active ? '' : 'active'}`}
               onClick={() => handleSelectOption(item)}
               key={item.name}
             >
@@ -69,11 +69,11 @@ const SubMenu = ({
                 }}
               >
                 <img
-                  className="optionImg"
+                  className='optionImg'
                   src={item.additionPhoto}
-                  alt="option"
+                  alt='option'
                 />
-                <span className="optionDescription">
+                <span className='optionDescription'>
                   {item.name}, koszt {item.price} zl
                 </span>
               </div>
