@@ -82,8 +82,8 @@ export class FirebaseService {
     return downloadURL;
   }
 
-  async getFileLink(fileName: string) {
-    const modelRef = ref(this.storage, `models/${fileName}`);
+  async getFileLink(fileName: string, folder: string) {
+    const modelRef = ref(this.storage, `${folder}/${fileName}`);
     return await getDownloadURL(modelRef);
   }
 }

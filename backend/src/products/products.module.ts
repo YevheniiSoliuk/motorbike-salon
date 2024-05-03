@@ -6,7 +6,7 @@ import Product from './entities/product.entity';
 import Category from 'src/categories/entities/category.entity';
 import Discount from 'src/discounts/entities/discount.entity';
 import Model from '../models/entities/model.entity';
-import Image from './images/image.entity';
+import Image from '../images/entities/image.entity';
 
 @Module({
   imports: [

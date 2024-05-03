@@ -4,7 +4,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import Product from './entities/product.entity';
 import { Repository } from 'typeorm';
-import Image from './images/image.entity';
+import Image from '../images/entities/image.entity';
 import Model from '../models/entities/model.entity';
 
 @Injectable()
@@ -24,13 +24,29 @@ export class ProductsService {
 
   async findAll() {
     return await this.productRepository.find({
-      relations: ['category', 'discount', 'models'],
+      relations: [
+        'category',
+        'discount',
+        'models',
+        'images',
+        'images.image',
+        'additions',
+        'additions.images.image',
+      ],
     });
   }
 
   async findOneById(id: number) {
     return await this.productRepository.findOne({
-      relations: ['category', 'discount', 'models'],
+      relations: [
+        'category',
+        'discount',
+        'models',
+        'images',
+        'images.image',
+        'additions',
+        'additions.images.image',
+      ],
       where: {
         id,
       },
