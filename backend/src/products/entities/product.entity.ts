@@ -12,6 +12,9 @@ import ProductDto from '../dto/product.dto';
 import Category from 'src/categories/entities/category.entity';
 import Discount from 'src/discounts/entities/discount.entity';
 import Model from 'src/models/entities/model.entity';
+import Image from 'src/images/entities/image.entity';
+import Addition from 'src/additions/entities/addition.entity';
+import ProductImage from 'src/images/product-image/product-image.entity';
 
 @Entity()
 export default class Product extends BaseEntity implements ProductDto {
@@ -44,4 +47,10 @@ export default class Product extends BaseEntity implements ProductDto {
 
   @OneToMany(() => Model, (model) => model.product)
   models: Model[];
+
+  @OneToMany(() => ProductImage, (image) => image.product)
+  images: ProductImage[];
+
+  @OneToMany(() => Addition, (addition) => addition.product)
+  additions: Addition[];
 }

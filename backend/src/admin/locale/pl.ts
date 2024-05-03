@@ -9,6 +9,7 @@ export const pl = {
     Product: 'Produkt',
     Image: 'Obrazek',
     Model: 'Model',
+    Addition: 'Dodatek',
   },
   resources: {
     Discount: {
@@ -41,6 +42,14 @@ export const pl = {
     Model: {
       properties: {
         name: 'Nazwa',
+      },
+    },
+    Addition: {
+      properties: {
+        name: 'Nazwa',
+        price: 'Cena',
+        imageId: 'Id obrazku',
+        productId: 'Id produktu',
       },
     },
   },

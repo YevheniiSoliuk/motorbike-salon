@@ -41,6 +41,6 @@ export class ModelsService {
       throw new NotFoundException();
     }
 
-    return await this.firebaseService.getFileLink(modelName);
+    return await this.firebaseService.getFileLink(modelName, 'model');
   }
 }

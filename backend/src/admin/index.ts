@@ -4,7 +4,9 @@ import Discount from 'src/discounts/entities/discount.entity';
 import Product from 'src/products/entities/product.entity';
 import Category from 'src/categories/entities/category.entity';
 import Model from 'src/models/entities/model.entity';
-import Image from 'src/products/images/image.entity';
+import Image from 'src/images/entities/image.entity';
+import AdditionImage from 'src/images/addition-image/addition-image.entity';
+import ProductImage from 'src/images/product-image/product-image.entity';
 
 import { dataSource } from '../database/data-source';
 import { locale } from './locale';
@@ -15,10 +17,11 @@ import {
   GCP_STORAGE_BUCKET,
   MAX_MODEL_FILE_SIZE,
   GCP_SERVICE_ACCOUNT,
+  MAX_IMAGE_FILE_SIZE,
+  IMAGE_FILE_MIME_TYPES,
 } from './constants';
-import { generateModelFileName, getFileExtension } from 'src/models/utils';
-import { FirebaseService } from 'src/firebase/firebase.service';
-import { ConfigService } from '@nestjs/config';
+import Addition from 'src/additions/entities/addition.entity';
+import { afterFileUpload } from './features/file';
 
 dotenv.config();
 
@@ -43,30 +46,11 @@ export default async function initAdminPanel(
     Database: AdminJSTypeorm.Database,
   });
 
-  const someAfterHook = async (res, req, context) => {
-    const { id } = context.record.params;
-    const filename = req.files['file.0'].name;
-    const config = new ConfigService();
-    const firebase = new FirebaseService(config);
-    const link = await firebase.getFileLink(filename);
-
-    await dataSource.getRepository('model').update(
-      {
-        id,
-      },
-      {
-        url: link,
-      },
-    );
-
-    return res;
-  };
-
   const uploadFileFeature = (config = {}) => {
     return buildFeature({
       actions: {
         new: {
-          after: [someAfterHook],
+          after: [afterFileUpload],
         },
       },
     });
@@ -78,7 +62,30 @@ export default async function initAdminPanel(
       Discount,
       Category,
       Product,
-      Image,
+      Addition,
+      ProductImage,
+      AdditionImage,
+      {
+        resource: Image,
+        features: [
+          uploadFeature.default({
+            componentLoader: componentLoader,
+            provider: { gcp: GCScredentials },
+            validation: {
+              mimeTypes: IMAGE_FILE_MIME_TYPES,
+              maxSize: MAX_IMAGE_FILE_SIZE,
+            },
+            properties: {
+              key: 'key',
+              bucket: 'images',
+            },
+            uploadPath: (record, filename) => {
+              return `images/${filename}`;
+            },
+          }),
+          uploadFileFeature({}),
+        ],
+      },
       {
         resource: Model,
         features: [
