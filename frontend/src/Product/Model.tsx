@@ -12,11 +12,11 @@ const Model = ({ modelUrl }: ModelProps) => {
   return (
     <div>
       <model-viewer
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '1000px', height: '700px' }}
         touch-action='pan-y'
         tone-mapping='aces'
         id='first'
-        src={'/assets/scene.glb'}
+        src={modelUrl}
         seamless-poster
         environment-image='neutral'
         exposure={1.0}
