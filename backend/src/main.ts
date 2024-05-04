@@ -14,7 +14,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   app.enableCors({
     origin: ['http://localhost:3000'],
-    //credentials: true,
+    credentials: true,
   });
 
   /*
@@ -24,9 +24,24 @@ async function bootstrap() {
     .setTitle('Motorcycle salon')
     .setDescription('The motorcycle salon API description')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
 
   /*
    * Admin.js
