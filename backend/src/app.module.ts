@@ -12,6 +12,9 @@ import { ProductsModule } from './products/products.module';
 import { ModelsModule } from './models/models.module';
 import { AdditionsModule } from './additions/additions.module';
 import { ImagesModule } from './images/images.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -40,6 +43,11 @@ import { ImagesModule } from './images/images.module';
         ADMIN_PANEL_EMAIL: Joi.string().required(),
         ADMIN_PANEL_PASSWORD: Joi.string().required(),
         ADMIN_PANEL_COOKIE_SECRET: Joi.string().required(),
+
+        ACCESS_TOKEN_EXPIRES_IN_SECONDS: Joi.string().required(),
+        REFRESH_TOKEN_EXPIRES_IN_SECONDS: Joi.string().required(),
+        ACCESS_TOKEN_SECRET: Joi.string().required(),
+        REFRESH_TOKEN_SECRET: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRootAsync({
@@ -64,6 +72,9 @@ import { ImagesModule } from './images/images.module';
     ModelsModule,
     AdditionsModule,
     ImagesModule,
+    AuthModule,
+    UsersModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

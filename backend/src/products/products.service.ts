@@ -4,18 +4,12 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import Product from './entities/product.entity';
 import { Repository } from 'typeorm';
-import Image from '../images/entities/image.entity';
-import Model from '../models/entities/model.entity';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
-    @InjectRepository(Image)
-    private readonly imageRepository: Repository<Image>,
-    @InjectRepository(Model)
-    private readonly modelRepository: Repository<Model>,
   ) {}
 
   create(createProductDto: CreateProductDto) {
