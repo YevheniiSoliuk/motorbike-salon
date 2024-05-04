@@ -1,14 +1,37 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import type { ModelViewerElement } from '@google/model-viewer/lib/model-viewer';
 import '@google/model-viewer/dist/model-viewer';
 type ModelProps = {
   modelUrl: string;
+  color: Array<number>;
 };
 
-const Model = ({ modelUrl }: ModelProps) => {
-  const modelRef = useRef<ModelViewerElement>();
-  console.log(modelRef.current);
+const Model = ({ modelUrl, color }: ModelProps) => {
+  const modelRef: any = useRef<ModelViewerElement>();
+  useEffect(() => {
+    const modelViewer: any = document.querySelector('model-viewer');
+    if (modelViewer.model && modelViewer.model.materials[18]) {
+      modelViewer.model.materials[18].pbrMetallicRoughness.baseColorTexture.setTexture(
+        null,
+      );
+      modelViewer.model.materials[18].pbrMetallicRoughness.setBaseColorFactor(
+        color,
+      );
+    }
+    function onModelLoad() {
+      modelViewer.model.materials[18].pbrMetallicRoughness.baseColorTexture.setTexture(
+        null,
+      );
+      modelViewer.model.materials[18].pbrMetallicRoughness.setBaseColorFactor(
+        color,
+      );
+    }
+    modelViewer.addEventListener('load', onModelLoad);
 
+    return () => {
+      modelViewer.removeEventListener('load', onModelLoad);
+    };
+  }, [color]);
   return (
     <div>
       <model-viewer

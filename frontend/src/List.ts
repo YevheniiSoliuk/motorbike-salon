@@ -9,7 +9,7 @@ const list = [
         color: [
           {
             name: 'Styl Exclusive',
-            photo: 'darkblue',
+            photo: [0, 0, 0.1, 1, 1],
             additionPhoto: './photos/r1250rs/r1250rs-stylexclusive.jfif',
             price: '0',
             active: true,
@@ -17,7 +17,7 @@ const list = [
           },
           {
             name: 'Style Sport',
-            photo: 'grey',
+            photo: [0.75, 0.75, 0.75, 1],
             additionPhoto: './photos/r1250rs/r1250rs-stylsport.jfif',
             price: '1500',
             active: false,

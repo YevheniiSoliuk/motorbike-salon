@@ -106,10 +106,13 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
             </Link>
             <div className='contentContainer'>
               <div className='imageWrapper'>
-                {/* <Photo photo={photo} /> */}
-                <Model
-                  modelUrl={product?.models[1].url ?? '/assets/scene.glb'}
-                />
+                {/* {<Photo photo={photo} model={'/assets/scene.glb'} />} */}
+                {
+                  <Model
+                    modelUrl={product?.models[1].url ?? '/assets/scene.glb'}
+                    color={photo}
+                  />
+                }
               </div>
               <div className='configWrapper'>
                 <div className='marginConfig'>
