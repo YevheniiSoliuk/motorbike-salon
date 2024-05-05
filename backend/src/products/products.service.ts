@@ -4,6 +4,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import Product from './entities/product.entity';
 import { Repository } from 'typeorm';
+import { UUID } from 'crypto';
 
 @Injectable()
 export class ProductsService {
@@ -43,6 +44,14 @@ export class ProductsService {
       ],
       where: {
         id,
+      },
+    });
+  }
+
+  async findOneByUuid(uuid: UUID) {
+    return await this.productRepository.findOne({
+      where: {
+        uuid,
       },
     });
   }

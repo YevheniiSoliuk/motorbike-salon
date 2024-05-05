@@ -4,6 +4,7 @@ import { UpdateAdditionDto } from './dto/update-addition.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import Addition from './entities/addition.entity';
 import { Repository } from 'typeorm';
+import { UUID } from 'crypto';
 
 @Injectable()
 export default class AdditionsService {
@@ -23,6 +24,10 @@ export default class AdditionsService {
 
   async findOneById(id: number) {
     return await this.additionRepository.findOneBy({ id });
+  }
+
+  async findOneByUuid(uuid: UUID) {
+    return await this.additionRepository.findOneBy({ uuid });
   }
 
   async update(id: number, updateAdditionDto: UpdateAdditionDto) {

@@ -109,7 +109,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                 {/* {<Photo photo={photo} model={'/assets/scene.glb'} />} */}
                 {
                   <Model
-                    modelUrl={product?.models[1].url ?? '/assets/scene.glb'}
+                    modelUrl={product?.models[0].url ?? '/assets/scene.glb'}
                     color={photo}
                   />
                 }
