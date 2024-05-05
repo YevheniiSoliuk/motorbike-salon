@@ -3,12 +3,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import UserDto from '../dto/user.dto';
 import Role from 'src/roles/entities/role.entity';
 import { UUID } from 'crypto';
+import Configuration from 'src/configurations/entities/configuration.entity';
 
 @Entity()
 export default class User extends BaseEntity implements UserDto {
@@ -36,4 +38,7 @@ export default class User extends BaseEntity implements UserDto {
   @OneToOne(() => Role)
   @JoinColumn({ name: 'roleId', referencedColumnName: 'id' })
   role: Role;
+
+  @OneToMany(() => Configuration, (configuration) => configuration.user)
+  configurations: Configuration[];
 }

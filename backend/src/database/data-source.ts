@@ -8,6 +8,10 @@ import Image from 'src/images/entities/image.entity';
 import Addition from 'src/additions/entities/addition.entity';
 import AdditionImage from 'src/images/addition-image/addition-image.entity';
 import ProductImage from 'src/images/product-image/product-image.entity';
+import Configuration from 'src/configurations/entities/configuration.entity';
+import User from 'src/users/entities/user.entity';
+import Role from 'src/roles/entities/role.entity';
+import ConfigurationAddition from 'src/configurations/configuration-addition/configuration-addition.entity';
 
 dotenv.config();
 
@@ -27,6 +31,10 @@ export const dataSource: DataSource = new DataSource({
     Addition,
     AdditionImage,
     ProductImage,
+    Configuration,
+    ConfigurationAddition,
+    User,
+    Role,
   ],
   logging: true,
 });

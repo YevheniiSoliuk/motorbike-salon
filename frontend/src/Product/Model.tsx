@@ -7,6 +7,7 @@ type ModelProps = {
 };
 
 const Model = ({ modelUrl, color }: ModelProps) => {
+  console.log(modelUrl);
   const modelRef: any = useRef<ModelViewerElement>();
   useEffect(() => {
     const modelViewer: any = document.querySelector('model-viewer');

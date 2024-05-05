@@ -12,6 +12,7 @@ import { ProductsModule } from './products/products.module';
 import { ModelsModule } from './models/models.module';
 import { AdditionsModule } from './additions/additions.module';
 import { ImagesModule } from './images/images.module';
+import { ConfigurationsModule } from './configurations/configurations.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
@@ -72,6 +73,7 @@ import { RolesModule } from './roles/roles.module';
     ModelsModule,
     AdditionsModule,
     ImagesModule,
+    ConfigurationsModule,
     AuthModule,
     UsersModule,
     RolesModule,

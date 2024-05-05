@@ -22,6 +22,10 @@ import {
 } from './constants';
 import Addition from 'src/additions/entities/addition.entity';
 import { afterFileUpload } from './features/file';
+import Configuration from 'src/configurations/entities/configuration.entity';
+import User from 'src/users/entities/user.entity';
+import Role from 'src/roles/entities/role.entity';
+import ConfigurationAddition from 'src/configurations/configuration-addition/configuration-addition.entity';
 
 dotenv.config();
 
@@ -65,6 +69,8 @@ export default async function initAdminPanel(
       Addition,
       ProductImage,
       AdditionImage,
+      User,
+      Role,
       {
         resource: Image,
         features: [

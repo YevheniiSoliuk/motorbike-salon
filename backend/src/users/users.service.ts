@@ -32,7 +32,10 @@ export class UsersService {
   }
 
   async findOneByUuid(uuid: UUID) {
-    return await this.usersRepository.findOneBy({ uuid });
+    return await this.usersRepository.findOne({
+      relations: ['configurations', 'role'],
+      where: { uuid },
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
