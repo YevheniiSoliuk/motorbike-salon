@@ -3,15 +3,14 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import AdditionDto from '../dto/addition.dto';
-import Product from 'src/products/entities/product.entity';
 import AdditionImage from 'src/images/addition-image/addition-image.entity';
 import { UUID } from 'crypto';
 import ConfigurationAddition from 'src/configurations/configuration-addition/configuration-addition.entity';
+import ProductAddition from 'src/products/product-addition/product-addition.entity';
 
 @Entity()
 export default class Addition extends BaseEntity implements AdditionDto {
@@ -27,9 +26,12 @@ export default class Addition extends BaseEntity implements AdditionDto {
   @Column('float', { nullable: false })
   price: number;
 
-  @ManyToOne(() => Product)
+  @OneToMany(
+    () => ProductAddition,
+    (productsAdditions) => productsAdditions.addition,
+  )
   @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
-  product: Product;
+  products: ProductAddition[];
 
   @OneToMany(() => AdditionImage, (image) => image.addition)
   @JoinColumn({ name: 'imageId', referencedColumnName: 'id' })

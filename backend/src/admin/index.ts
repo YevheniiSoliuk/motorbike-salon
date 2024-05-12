@@ -1,39 +1,26 @@
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-import Discount from 'src/discounts/entities/discount.entity';
-import Product from 'src/products/entities/product.entity';
-import Category from 'src/categories/entities/category.entity';
-import Model from 'src/models/entities/model.entity';
-import Image from 'src/images/entities/image.entity';
-import AdditionImage from 'src/images/addition-image/addition-image.entity';
-import ProductImage from 'src/images/product-image/product-image.entity';
+import { ImageResource } from './resources/image.resource';
+import { ModelResource } from './resources/model.resource';
+import { DiscountResource } from './resources/discount.resource';
+import { CategoryResource } from './resources/category.resource';
+import { UserResource } from './resources/user.resource';
+import { RoleResource } from './resources/role.resource';
+import { ProductResource } from './resources/product.resource';
+import { ProductAdditionResource } from './resources/product-addition.resource';
+import { ProductImageResource } from './resources/product-image.resource';
+import { ProductModelResource } from './resources/product-model.resource';
+import { AdditionResource } from './resources/addition.resource';
+import { AdditionImageResource } from './resources/addition-image.resource';
 
 import { dataSource } from '../database/data-source';
 import { locale } from './locale';
 import { authenticate } from './auth';
+import { afterFileUpload } from './features/file';
 
 import dotenv from 'dotenv';
-import {
-  GCP_STORAGE_BUCKET,
-  MAX_MODEL_FILE_SIZE,
-  GCP_SERVICE_ACCOUNT,
-  MAX_IMAGE_FILE_SIZE,
-  IMAGE_FILE_MIME_TYPES,
-} from './constants';
-import Addition from 'src/additions/entities/addition.entity';
-import { afterFileUpload } from './features/file';
-import Configuration from 'src/configurations/entities/configuration.entity';
-import User from 'src/users/entities/user.entity';
-import Role from 'src/roles/entities/role.entity';
-import ConfigurationAddition from 'src/configurations/configuration-addition/configuration-addition.entity';
 
 dotenv.config();
-
-const GCScredentials = {
-  serviceAccount: GCP_SERVICE_ACCOUNT,
-  bucket: GCP_STORAGE_BUCKET,
-  expires: 0,
-};
 
 export default async function initAdminPanel(
   app: NestExpressApplication,
@@ -62,57 +49,24 @@ export default async function initAdminPanel(
 
   const AdminJSExpress = await import('@adminjs/express');
   const adminPanel = new AdminJS({
+    branding: {
+      logo: 'https://firebasestorage.googleapis.com/v0/b/motorcycle-salon.appspot.com/o/motorbike.png?alt=media&token=2676a6f2-18a1-45ab-925c-63651df6c35f',
+      companyName: 'MotorCycle',
+      withMadeWithLove: true,
+    },
     resources: [
-      Discount,
-      Category,
-      Product,
-      Addition,
-      ProductImage,
-      AdditionImage,
-      User,
-      Role,
-      {
-        resource: Image,
-        features: [
-          uploadFeature.default({
-            componentLoader: componentLoader,
-            provider: { gcp: GCScredentials },
-            validation: {
-              mimeTypes: IMAGE_FILE_MIME_TYPES,
-              maxSize: MAX_IMAGE_FILE_SIZE,
-            },
-            properties: {
-              key: 'key',
-              bucket: 'images',
-            },
-            uploadPath: (record, filename) => {
-              return `images/${filename}`;
-            },
-          }),
-          uploadFileFeature({}),
-        ],
-      },
-      {
-        resource: Model,
-        features: [
-          uploadFeature.default({
-            componentLoader: componentLoader,
-            provider: { gcp: GCScredentials },
-            validation: {
-              // mimeTypes: ['model/gltf-binary'],
-              maxSize: MAX_MODEL_FILE_SIZE,
-            },
-            properties: {
-              key: 'key',
-              bucket: 'models',
-            },
-            uploadPath: (record, filename) => {
-              return `models/${filename}`;
-            },
-          }),
-          uploadFileFeature({}),
-        ],
-      },
+      DiscountResource,
+      CategoryResource,
+      ProductResource,
+      AdditionResource,
+      ProductAdditionResource,
+      ProductImageResource,
+      ProductModelResource,
+      AdditionImageResource,
+      UserResource,
+      RoleResource,
+      ImageResource(uploadFeature, componentLoader, uploadFileFeature),
+      ModelResource(uploadFeature, componentLoader, uploadFileFeature),
     ],
     locale: locale,
     componentLoader,

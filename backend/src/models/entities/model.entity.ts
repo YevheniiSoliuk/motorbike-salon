@@ -2,12 +2,11 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import ModelDto from '../dto/model.dto';
-import Product from '../../products/entities/product.entity';
+import ProductModel from 'src/products/product-model/product-model.entity';
 
 @Entity()
 export default class Model extends BaseEntity implements ModelDto {
@@ -20,7 +19,6 @@ export default class Model extends BaseEntity implements ModelDto {
   @Column('varchar', { unique: true, nullable: false })
   url: string;
 
-  @ManyToOne(() => Product)
-  @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
-  product: Product;
+  @OneToMany(() => ProductModel, (productModel) => productModel.model)
+  products: ProductModel[];
 }
