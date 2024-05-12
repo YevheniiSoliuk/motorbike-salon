@@ -22,11 +22,9 @@ export class ProductsService {
       relations: [
         'category',
         'discount',
-        'models',
-        'images',
+        'models.model',
         'images.image',
-        'additions',
-        'additions.images.image',
+        'additions.addition.images.image',
       ],
     });
   }
@@ -36,11 +34,9 @@ export class ProductsService {
       relations: [
         'category',
         'discount',
-        'models',
-        'images',
+        'models.model',
         'images.image',
-        'additions',
-        'additions.images.image',
+        'additions.addition.images.image',
       ],
       where: {
         id,

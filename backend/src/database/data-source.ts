@@ -12,6 +12,8 @@ import Configuration from 'src/configurations/entities/configuration.entity';
 import User from 'src/users/entities/user.entity';
 import Role from 'src/roles/entities/role.entity';
 import ConfigurationAddition from 'src/configurations/configuration-addition/configuration-addition.entity';
+import ProductAddition from 'src/products/product-addition/product-addition.entity';
+import ProductModel from 'src/products/product-model/product-model.entity';
 
 dotenv.config();
 
@@ -26,6 +28,8 @@ export const dataSource: DataSource = new DataSource({
     Discount,
     Category,
     Product,
+    ProductAddition,
+    ProductModel,
     Image,
     Model,
     Addition,

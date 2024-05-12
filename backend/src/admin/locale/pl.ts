@@ -10,6 +10,15 @@ export const pl = {
     Image: 'Obrazek',
     Model: 'Model',
     Addition: 'Dodatek',
+    User: 'Użytkownik',
+    Role: 'Rola',
+    ProductAddition: 'Dodatki produktów',
+    ProductImage: 'Obrazki produktów',
+    ProductModel: 'Modele produktów',
+    AdditionImage: 'Obrazki dodatków',
+    Products: 'Produkty',
+    Additions: 'Dodatki',
+    Users: 'Użytkownicy',
   },
   resources: {
     Discount: {
@@ -50,6 +59,46 @@ export const pl = {
         price: 'Cena',
         imageId: 'Id obrazku',
         productId: 'Id produktu',
+      },
+    },
+    User: {
+      properties: {
+        firstName: 'Imię',
+        lastName: 'Nazwisko',
+        role: 'Rola',
+      },
+    },
+    ProductAddition: {
+      properties: {
+        name: 'Nazwa',
+        productId: 'Id produktu',
+        additionId: 'Id dodatku',
+      },
+    },
+    Role: {
+      properties: {
+        name: 'Nazwa',
+      },
+    },
+    ProductImage: {
+      properties: {
+        name: 'Nazwa',
+        productId: 'Id produktu',
+        imageId: 'Id obrazku',
+      },
+    },
+    ProductModel: {
+      properties: {
+        name: 'Nazwa',
+        productId: 'Id produktu',
+        modelId: 'Id modelu',
+      },
+    },
+    AdditionImage: {
+      properties: {
+        name: 'Nazwa',
+        productId: 'Id produktu',
+        additionId: 'Id dodatku',
       },
     },
   },

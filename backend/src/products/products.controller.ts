@@ -21,6 +21,7 @@ import {
 import { Response } from 'express';
 import ProductDto from './dto/product.dto';
 import JwtGuard from 'src/auth/guards/jwt.guard';
+import { plainToInstance } from 'class-transformer';
 
 @ApiTags('Products')
 @Controller('products')
@@ -39,7 +40,9 @@ export class ProductsController {
   async findAll(@Res() res: Response) {
     const products = await this.productsService.findAll();
 
-    res.send(products);
+    res
+      .status(200)
+      .json(plainToInstance(ProductDto, products, { strategy: 'exposeAll' }));
   }
 
   @ApiOkResponse({ type: ProductDto })
@@ -48,7 +51,9 @@ export class ProductsController {
   async findOne(@Param('id') id: string, @Res() res: Response) {
     const product = await this.productsService.findOneById(+id);
 
-    res.send(product);
+    res
+      .status(200)
+      .json(plainToInstance(ProductDto, product, { strategy: 'exposeAll' }));
   }
 
   @UseGuards(JwtGuard)
