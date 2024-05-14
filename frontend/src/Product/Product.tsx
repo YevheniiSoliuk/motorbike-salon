@@ -33,6 +33,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
   const [firstMenuPrice, setFirstMenuPrice] = useState(0);
   const [secondMenuPrice, setSecondPrice] = useState(0);
   const [photo, setPhoto] = useState(order.description[0].color[0].photo);
+  const [option1, setOption1] = useState(order.description[0].color[0].option1);
 
   const [clearFirstMenu, setClearFirstMenu] = useState(false);
   const [clearSecondMenu, setClearSecondMenu] = useState(false);
@@ -60,6 +61,8 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
   const photoChange = (photo: any) => {
     if (photo !== undefined) {
       setPhoto(photo);
+    } else if (option1 !== undefined) {
+      setPhoto(option1);
     }
   };
   const handleClearFirstSelectedOptions = () => {
@@ -78,12 +81,12 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
   };
 
   const [product, setProduct] = useState<Product | null>(null);
-  useEffect(() => {
-    (async () => {
-      const { data: product } = await fetchProductById(5);
-      setProduct(product);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { data: product } = await fetchProductById(5);
+  //     setProduct(product);
+  //   })();
+  // }, []);
 
   return (
     <>
@@ -109,8 +112,9 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                 {/* {<Photo photo={photo} model={'/assets/scene.glb'} />} */}
                 {
                   <Model
-                    modelUrl={product?.models[0].url ?? '/assets/scene.glb'}
+                    modelUrl={product?.models[0].url ?? '/assets/txmaaax.glb'}
                     color={photo}
+                    option1={option1}
                   />
                 }
               </div>
@@ -119,7 +123,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                   <h2 className='configHeader'>Konfiguracja</h2>
                   <hr className='headerLine' />
                   <div className='headerContainer'>
-                    <h3 onClick={() => toggle(2)}>Colors</h3>
+                    <h3 onClick={() => toggle(2)}>Kolory</h3>
                     <span
                       className='clearConfig'
                       onClick={handleClearFirstSelectedOptions}
@@ -176,7 +180,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                   </p>
                 </div>
                 <Link to='/summary' className='goSummary'>
-                  <button className='button-66'>Go to Summary</button>
+                  <button className='button-66'>Idź do podsumowania</button>
                 </Link>
               </div>
             </div>

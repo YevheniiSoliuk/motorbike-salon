@@ -25,24 +25,26 @@ const list = [
         ],
         additions: [
           {
-            name: 'Standardowa gwarancja 2 lata',
+            name: 'Zwykłe siodełko',
             additionPhoto: './photos/r1250rs/warranty-photo.jfif',
             price: '0',
             active: true,
             default: true,
+            option: { option: [0, 0.2, 0, 1], optionNumber: 1 },
           },
           {
-            name: 'Gwarancja + 3 lata',
+            name: 'Sportowe siodełko',
             additionPhoto: './photos/r1250rs/warranty-photo.jfif',
             price: '1000',
             active: false,
+            option: { option: [1, 0.2, 1, 1], optionNumber: 2 },
           },
-          {
-            name: 'Gwarancja + 5 lata',
-            additionPhoto: './photos/r1250rs/warranty-photo.jfif',
-            price: '1500,00',
-            active: false,
-          },
+          // {
+          //   name: 'Gwarancja + 5 lata',
+          //   additionPhoto: './photos/r1250rs/warranty-photo.jfif',
+          //   price: '1500,00',
+          //   active: false,
+          // },
         ],
         description:
           'Szybka podróż czy sportowa przyjemność z pokonywania zakrętów: BMW R 1250 RS oferuje wyjątkowo dynamiczne połączenie sportowego charakteru i wysokiego komfortu podróży, zapewniając w rezultacie szczególne wrażenia podczas jazdy.',

@@ -15,7 +15,11 @@ const SubMenu = ({
       if (!element.default) {
         return (element.active = false);
       } else {
-        photoChange(element.photo);
+        if (element.hasOwnProperty('option')) {
+          photoChange(element.option);
+        } else {
+          photoChange(element.photo);
+        }
         return (element.active = true);
       }
     });
@@ -27,14 +31,22 @@ const SubMenu = ({
     }
   });
 
-  const handleClick = (option: any, photo: any, addOrRemove: number) => {
+  const handleClick = (
+    option: any,
+    photo: any,
+    addOrRemove: number,
+    item: any,
+  ) => {
     if (addOrRemove === 1) {
       price(option);
     } else {
       price(option);
     }
-
-    photoChange(photo);
+    if (item.hasOwnProperty('option')) {
+      photoChange(item.option);
+    } else {
+      photoChange(photo);
+    }
   };
 
   const handleSelectOption = (selected: any) => {
@@ -65,7 +77,7 @@ const SubMenu = ({
               <div
                 className={`optionBox `}
                 onClick={() => {
-                  handleClick(item.price, item.photo, 1);
+                  handleClick(item.price, item.photo, 1, item);
                 }}
               >
                 <img
@@ -74,7 +86,7 @@ const SubMenu = ({
                   alt='option'
                 />
                 <span className='optionDescription'>
-                  {item.name}, koszt {item.price} zl
+                  {item.name}, koszt {item.price} zł
                 </span>
               </div>
             </div>

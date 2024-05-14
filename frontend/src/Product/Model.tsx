@@ -3,27 +3,52 @@ import type { ModelViewerElement } from '@google/model-viewer/lib/model-viewer';
 import '@google/model-viewer/dist/model-viewer';
 type ModelProps = {
   modelUrl: string;
-  color: Array<number>;
+  color: Array<number> | Object;
+  option1: Array<number>;
 };
 
-const Model = ({ modelUrl, color }: ModelProps) => {
-  console.log(modelUrl);
+const Model = ({ modelUrl, color, option1 }: ModelProps) => {
   const modelRef: any = useRef<ModelViewerElement>();
   useEffect(() => {
     const modelViewer: any = document.querySelector('model-viewer');
-    if (modelViewer.model && modelViewer.model.materials[18]) {
-      modelViewer.model.materials[18].pbrMetallicRoughness.baseColorTexture.setTexture(
+    if (
+      modelViewer.model &&
+      modelViewer.model.materials[18] &&
+      !('optionNumber' in color)
+    ) {
+      modelViewer.model.materials[30].pbrMetallicRoughness.baseColorTexture.setTexture(
         null,
       );
-      modelViewer.model.materials[18].pbrMetallicRoughness.setBaseColorFactor(
+      modelViewer.model.materials[30].pbrMetallicRoughness.setBaseColorFactor(
         color,
       );
+    } else {
+      if ('optionNumber' in color) {
+        if (color.optionNumber == 1) {
+          modelViewer.model.materials[31].pbrMetallicRoughness.setBaseColorFactor(
+            [0, 0, 0, 1],
+          );
+
+          modelViewer.model.materials[58].pbrMetallicRoughness.setBaseColorFactor(
+            [0, 0, 0, -1],
+          );
+        } else if (color.optionNumber == 2) {
+          modelViewer.model.materials[31].pbrMetallicRoughness.setBaseColorFactor(
+            [0, 0, 0, -1],
+          );
+
+          modelViewer.model.materials[58].pbrMetallicRoughness.setBaseColorFactor(
+            [0, 0, 0, 1],
+          );
+        }
+      }
     }
+
     function onModelLoad() {
-      modelViewer.model.materials[18].pbrMetallicRoughness.baseColorTexture.setTexture(
+      modelViewer.model.materials[30].pbrMetallicRoughness.baseColorTexture.setTexture(
         null,
       );
-      modelViewer.model.materials[18].pbrMetallicRoughness.setBaseColorFactor(
+      modelViewer.model.materials[30].pbrMetallicRoughness.setBaseColorFactor(
         color,
       );
     }
