@@ -11,10 +11,10 @@ import {
 import ProductDto from '../dto/product.dto';
 import Category from 'src/categories/entities/category.entity';
 import Discount from 'src/discounts/entities/discount.entity';
-import Model from 'src/models/entities/model.entity';
 import ProductImage from 'src/images/product-image/product-image.entity';
 import ProductAddition from '../product-addition/product-addition.entity';
 import ProductModel from '../product-model/product-model.entity';
+import ProductGuaranty from '../product-guaranty/product-guaranty.entity';
 
 @Entity()
 export default class Product extends BaseEntity implements ProductDto {
@@ -56,4 +56,10 @@ export default class Product extends BaseEntity implements ProductDto {
     (productAddition) => productAddition.product,
   )
   additions: ProductAddition[];
+
+  @OneToMany(
+    () => ProductGuaranty,
+    (productGuaranty) => productGuaranty.product,
+  )
+  guaranties: ProductGuaranty[];
 }

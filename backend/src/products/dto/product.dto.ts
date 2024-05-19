@@ -11,6 +11,7 @@ import DiscountDto from 'src/discounts/dto/discount.dto';
 import ProductAdditionDto from '../product-addition/product-addition.dto';
 import { Type } from 'class-transformer';
 import ProductModelDto from '../product-model/product-model.dto';
+import ProductGuarantyDto from '../product-guaranty/product-guaranty.dto';
 
 export default class ProductDto {
   @IsNumber()
@@ -51,4 +52,8 @@ export default class ProductDto {
   @ApiProperty({ type: () => [ProductAdditionDto] })
   @Type(() => ProductAdditionDto)
   additions: ProductAdditionDto[];
+
+  @ApiProperty({ type: () => [ProductGuarantyDto] })
+  @Type(() => ProductGuarantyDto)
+  guaranties: ProductGuarantyDto[];
 }

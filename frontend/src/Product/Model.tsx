@@ -61,7 +61,7 @@ const Model = ({ modelUrl, color, option1 }: ModelProps) => {
   return (
     <div>
       <model-viewer
-        style={{ width: '1000px', height: '700px' }}
+        style={{ width: '900px', height: '670px' }}
         touch-action='pan-y'
         tone-mapping='aces'
         id='first'

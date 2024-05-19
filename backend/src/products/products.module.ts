@@ -7,10 +7,16 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from 'src/users/users.module';
 import ProductAddition from './product-addition/product-addition.entity';
 import ProductModel from './product-model/product-model.entity';
+import ProductGuaranty from './product-guaranty/product-guaranty.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, ProductAddition, ProductModel]),
+    TypeOrmModule.forFeature([
+      Product,
+      ProductAddition,
+      ProductModel,
+      ProductGuaranty,
+    ]),
     UsersModule,
     ConfigModule,
   ],

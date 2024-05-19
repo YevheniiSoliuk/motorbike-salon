@@ -16,6 +16,8 @@ import { ConfigurationsModule } from './configurations/configurations.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
+import { DurationModule } from './duration/duration.module';
+import { GuarantyModule } from './guaranty/guaranty.module';
 
 @Module({
   imports: [
@@ -77,6 +79,8 @@ import { RolesModule } from './roles/roles.module';
     AuthModule,
     UsersModule,
     RolesModule,
+    DurationModule,
+    GuarantyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

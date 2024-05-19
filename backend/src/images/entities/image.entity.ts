@@ -9,6 +9,6 @@ export default class Image extends BaseEntity implements ImageDto {
   @Column('varchar', { nullable: false, unique: true })
   name: string;
 
-  @Column('varchar', { nullable: false, unique: true })
+  @Column('varchar', { nullable: true, unique: true })
   url: string;
 }
