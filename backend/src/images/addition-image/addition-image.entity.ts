@@ -1,5 +1,6 @@
 import {
   BaseEntity,
+  Column,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -16,6 +17,9 @@ export default class AdditionImage
 {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column('varchar', { nullable: false, unique: true })
+  name: string;
 
   @ManyToOne(() => Image)
   @JoinColumn({ name: 'imageId', referencedColumnName: 'id' })

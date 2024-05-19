@@ -1,13 +1,15 @@
 import User from 'src/users/entities/user.entity';
 import { usersNavigation } from '../constants';
 import { getUser } from '../auth';
+import { randomUUID } from 'crypto';
+import { dataSource } from 'src/database/data-source';
 
 export const UserResource = {
   resource: User,
   options: {
     navigation: usersNavigation,
-    listProperties: ['uuid', 'email', 'firstName', 'lastName', 'role'],
-    showProperties: ['uuid', 'email', 'firstName', 'lastName', 'role'],
+    listProperties: ['email', 'firstName', 'lastName', 'role'],
+    showProperties: ['email', 'firstName', 'lastName', 'role'],
     filterProperties: ['email', 'firstName', 'lastName'],
     editProperties: ['email', 'firstName', 'lastName'],
     properties: {
@@ -19,6 +21,7 @@ export const UserResource = {
       new: {
         isAccessible: isAccessibleForCurrentAdmin,
         isVisible: true,
+        before: [validateForm],
       },
       show: {
         after: [afterShowRecord],
@@ -26,6 +29,7 @@ export const UserResource = {
       edit: {
         isAccessible: isAccessibleForCurrentAdmin,
         isVisible: true,
+        before: [validateForm],
       },
       list: {
         after: [afterDisplayList],
@@ -35,8 +39,8 @@ export const UserResource = {
         isVisible: true,
       },
       bulkDelete: {
-        isAccessible: isAccessibleForCurrentAdmin,
-        isVisible: true,
+        isVisible: false,
+        isAccessable: false,
       },
     },
   },
@@ -75,8 +79,60 @@ async function afterShowRecord(response, request, context) {
   return response;
 }
 
-function isAccessibleForCurrentAdmin(context) {
-  const { currentAdmin } = context;
+async function isAccessibleForCurrentAdmin(context) {
+  const { record, currentAdmin } = context;
+  const user = await getFullUser(record?.params?.id);
 
-  return currentAdmin.role.name === 'super-admin';
+  return currentAdmin.role.name === 'super-admin' && user.role.name !== 'user';
+}
+
+async function validateForm(request, context) {
+  const { ValidationError } = await import('adminjs');
+  const { payload, method } = request;
+
+  if (method !== 'post') return request;
+  const { email, firstName, lastName } = payload;
+  const errors: any = {};
+
+  if (!email || !email.trim().length) {
+    errors.email = {
+      message: 'Email is required',
+    };
+  } else if (
+    !new RegExp(
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+      'gi',
+    ).test(email)
+  ) {
+    errors.email = {
+      message: 'Incorrect email',
+    };
+  }
+
+  if (!firstName || !firstName.trim().length) {
+    errors.firstName = {
+      message: 'First name is required',
+    };
+  }
+
+  if (!lastName || !lastName.trim().length) {
+    errors.lastName = {
+      message: 'Last name is required',
+    };
+  }
+
+  if (Object.keys(errors).length) {
+    throw new ValidationError(errors);
+  }
+
+  request.payload.uuid = randomUUID();
+
+  return request;
+}
+
+async function getFullUser(userId: number) {
+  return await dataSource.getRepository('user').findOne({
+    relations: ['role'],
+    where: { id: userId },
+  });
 }

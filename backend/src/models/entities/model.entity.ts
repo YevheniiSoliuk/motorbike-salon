@@ -16,7 +16,7 @@ export default class Model extends BaseEntity implements ModelDto {
   @Column('varchar', { unique: true, nullable: false })
   name: string;
 
-  @Column('varchar', { unique: true, nullable: false })
+  @Column('varchar', { unique: true, nullable: true })
   url: string;
 
   @OneToMany(() => ProductModel, (productModel) => productModel.model)

@@ -14,9 +14,11 @@ type Discount = {
 };
 
 type Model = {
-  id: number;
-  name: string;
-  url: string;
+  model: {
+    id: number;
+    name: string;
+    url: string;
+  };
 };
 
 export type Product = {

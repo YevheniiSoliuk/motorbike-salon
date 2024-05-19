@@ -81,12 +81,12 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
   };
 
   const [product, setProduct] = useState<Product | null>(null);
-  // useEffect(() => {
-  //   (async () => {
-  //     const { data: product } = await fetchProductById(5);
-  //     setProduct(product);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const { data: product } = await fetchProductById(5);
+      setProduct(product);
+    })();
+  }, []);
 
   return (
     <>
@@ -104,7 +104,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
               />
             </div>
             <Link to='/models' className='goBack'>
-              <img src='photos/more.png' alt='models' id='moreIcon' />
+              <img src='/photos/more.png' alt='models' id='moreIcon' />
               <span>Modele</span>
             </Link>
             <div className='contentContainer'>
@@ -112,7 +112,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                 {/* {<Photo photo={photo} model={'/assets/scene.glb'} />} */}
                 {
                   <Model
-                    modelUrl={product?.models[0].url ?? '/assets/txmaaax.glb'}
+                    modelUrl={product?.models[1].model.url ?? ''}
                     color={photo}
                     option1={option1}
                   />

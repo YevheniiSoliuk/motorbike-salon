@@ -1,6 +1,7 @@
 export const pl = {
   messages: {
     welcomeOnBoard_title: 'Nowy tyluł pulpitu',
+    nameRequiredError: 'Nazwa jest wymagana',
   },
   labels: {
     Dashboard: 'Panel główny',
@@ -15,16 +16,21 @@ export const pl = {
     ProductAddition: 'Dodatki produktów',
     ProductImage: 'Obrazki produktów',
     ProductModel: 'Modele produktów',
+    ProductGuaranty: 'Gwarancje produktów',
     AdditionImage: 'Obrazki dodatków',
     Products: 'Produkty',
     Additions: 'Dodatki',
     Users: 'Użytkownicy',
+    Duration: 'Czas trwania',
+    Guaranty: 'Gwarancja',
   },
   resources: {
     Discount: {
       properties: {
         name: 'Nazwa',
-        amount: 'Liczba',
+        amount: 'Kwota odsetek',
+        from_date: 'Od dnia',
+        to_date: 'Do dnia',
         fromDate: 'Od dnia',
         toDate: 'Do dnia',
       },
@@ -33,6 +39,7 @@ export const pl = {
       properties: {
         name: 'Nazwa',
         parentCategoryId: 'Nadkategoria',
+        parentCategory: 'Nadkategoria',
       },
     },
     Product: {
@@ -41,16 +48,20 @@ export const pl = {
         description: 'Opis',
         price: 'Cena',
         catalogNumber: 'Numer katalogowy',
+        category: 'Kategoria',
+        discount: 'Rabat',
       },
     },
     Image: {
       properties: {
         name: 'Nazwa',
+        file: 'Plik',
       },
     },
     Model: {
       properties: {
         name: 'Nazwa',
+        file: 'Plik',
       },
     },
     Addition: {
@@ -73,6 +84,8 @@ export const pl = {
         name: 'Nazwa',
         productId: 'Id produktu',
         additionId: 'Id dodatku',
+        product: 'Produkt',
+        addition: 'Dodatek',
       },
     },
     Role: {
@@ -85,6 +98,8 @@ export const pl = {
         name: 'Nazwa',
         productId: 'Id produktu',
         imageId: 'Id obrazku',
+        product: 'Produkt',
+        image: 'Obrazek',
       },
     },
     ProductModel: {
@@ -92,13 +107,37 @@ export const pl = {
         name: 'Nazwa',
         productId: 'Id produktu',
         modelId: 'Id modelu',
+        product: 'Produkt',
+        model: 'Model',
+      },
+    },
+    ProductGuaranty: {
+      properties: {
+        name: 'Nazwa',
+        productId: 'Id produktu',
+        guarantyId: 'Id gwarancji',
+        guaranty: 'Gwarancja',
       },
     },
     AdditionImage: {
       properties: {
         name: 'Nazwa',
+        image: 'Obrazek',
+        addition: 'Dodatek',
         productId: 'Id produktu',
         additionId: 'Id dodatku',
+      },
+    },
+    Guaranty: {
+      properties: {
+        name: 'Nazwa',
+        description: 'Opis',
+        price: 'Cena',
+        durationId: 'Id czasu trwania',
+        imageId: 'Id obrazku',
+        period: 'Okres',
+        duration: 'Czas trwania',
+        image: 'Obrazek',
       },
     },
   },

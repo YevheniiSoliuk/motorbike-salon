@@ -1,7 +1,7 @@
 const list = [
   {
     id: '1',
-    photo: 'photos/r1250rs/r1250rs-main.png',
+    photo: '/photos/r1250rs/r1250rs-main.png',
     model: 'R1250RS',
     price: '60000',
     description: [
@@ -10,7 +10,7 @@ const list = [
           {
             name: 'Styl Exclusive',
             photo: [0, 0, 0.1, 1, 1],
-            additionPhoto: './photos/r1250rs/r1250rs-stylexclusive.jfif',
+            additionPhoto: '/photos/r1250rs/r1250rs-stylexclusive.jfif',
             price: '0',
             active: true,
             default: true,
@@ -18,7 +18,7 @@ const list = [
           {
             name: 'Style Sport',
             photo: [0.75, 0.75, 0.75, 1],
-            additionPhoto: './photos/r1250rs/r1250rs-stylsport.jfif',
+            additionPhoto: '/photos/r1250rs/r1250rs-stylsport.jfif',
             price: '1500',
             active: false,
           },
@@ -26,7 +26,7 @@ const list = [
         additions: [
           {
             name: 'Zwykłe siodełko',
-            additionPhoto: './photos/r1250rs/warranty-photo.jfif',
+            additionPhoto: '/photos/r1250rs/warranty-photo.jfif',
             price: '0',
             active: true,
             default: true,
@@ -34,7 +34,7 @@ const list = [
           },
           {
             name: 'Sportowe siodełko',
-            additionPhoto: './photos/r1250rs/warranty-photo.jfif',
+            additionPhoto: '/photos/r1250rs/warranty-photo.jfif',
             price: '1000',
             active: false,
             option: { option: [1, 0.2, 1, 1], optionNumber: 2 },
@@ -53,7 +53,7 @@ const list = [
   },
   {
     id: '2',
-    photo: './photos/m1000rr/m1000rr-main.png',
+    photo: '/photos/m1000rr/m1000rr-main.png',
     model: 'M1000RR',
     price: '100000',
     description: [
@@ -97,7 +97,7 @@ const list = [
   },
   {
     id: '3',
-    photo: './photos/f750gs/f750gs-main.jpg',
+    photo: '/photos/f750gs/f750gs-main.jpg',
     model: 'F750GS',
     price: '40000',
     description: [

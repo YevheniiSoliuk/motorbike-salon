@@ -1,21 +1,23 @@
-import AdditionImage from 'src/images/addition-image/addition-image.entity';
-import { additionsNavigation } from '../constants';
+import ProductGuaranty from 'src/products/product-guaranty/product-guaranty.entity';
+import { productsNavigation } from '../constants';
 import { dataSource } from 'src/database/data-source';
 
-export const AdditionImageResource = {
-  resource: AdditionImage,
+export const ProductGuarantyResource = {
+  resource: ProductGuaranty,
   options: {
-    navigation: additionsNavigation,
-    listProperties: ['name', 'image', 'addition'],
-    showProperties: ['name', 'image', 'addition'],
-    filterProperties: ['name', 'image', 'addition'],
+    navigation: productsNavigation,
+    listProperties: ['name', 'product', 'guaranty'],
+    showProperties: ['name', 'product', 'guaranty'],
+    filterProperties: ['name', 'product', 'guaranty'],
     properties: {
-      image: {
+      product: {
+        type: 'string',
         isVisible: {
           edit: false,
         },
       },
-      addition: {
+      guaranty: {
+        type: 'string',
         isVisible: {
           edit: false,
         },
@@ -59,20 +61,18 @@ async function afterShowDetails(res) {
 }
 
 async function formatRecord(params) {
-  const additionImage = await getFullAdditionImage(params.id);
+  const productGuaranty = await getFullProductGuaranty(params.id);
 
-  params.price = `${params.price} PLN`;
-
-  if (!additionImage.addition) {
-    params.addition = 'N/A';
+  if (!productGuaranty.product) {
+    params.product = 'N/A';
   } else {
-    params.addition = additionImage.addition.name;
+    params.product = productGuaranty.product.name;
   }
 
-  if (!additionImage.image) {
-    params.image = 'N/A';
+  if (!productGuaranty.guaranty) {
+    params.guaranty = 'N/A';
   } else {
-    params.image = additionImage.image.name;
+    params.guaranty = productGuaranty.guaranty.name;
   }
 }
 
@@ -88,21 +88,22 @@ async function validateForm(request, context) {
     errors.name = {
       message: 'Name is required',
     };
-  } else if (!new RegExp(/^[a-z0-9 ,.'-]+$/, 'gi').test(name)) {
+  } else if (!new RegExp(/^[a-zA-Z0-9 -_]+$/, 'gi').test(name)) {
     errors.name = {
-      message: 'Name must contain latin letters',
+      message:
+        'Name must contain latin letters, digits, spaces, defices and underscores',
     };
   }
 
-  if (!payload['addition.id']) {
-    errors['addition.id'] = {
-      message: 'Addition ID is required',
+  if (!payload['product.id']) {
+    errors['product.id'] = {
+      message: 'Product ID is required',
     };
   }
 
-  if (!payload['image.id']) {
-    errors['image.id'] = {
-      message: 'Image ID is required',
+  if (!payload['guaranty.id']) {
+    errors['guaranty.id'] = {
+      message: 'Guaranty ID is required',
     };
   }
 
@@ -113,11 +114,11 @@ async function validateForm(request, context) {
   return request;
 }
 
-async function getFullAdditionImage(imageId: number) {
-  return await dataSource.getRepository('addition_image').findOne({
-    relations: ['addition', 'image'],
+async function getFullProductGuaranty(productGuarantyId: number) {
+  return await dataSource.getRepository('product_guaranty').findOne({
+    relations: ['product', 'guaranty'],
     where: {
-      id: imageId,
+      id: productGuarantyId,
     },
   });
 }

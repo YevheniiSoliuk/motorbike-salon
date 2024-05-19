@@ -10,8 +10,10 @@ import { ProductResource } from './resources/product.resource';
 import { ProductAdditionResource } from './resources/product-addition.resource';
 import { ProductImageResource } from './resources/product-image.resource';
 import { ProductModelResource } from './resources/product-model.resource';
+import { ProductGuarantyResource } from './resources/product-guaranty.resource';
 import { AdditionResource } from './resources/addition.resource';
 import { AdditionImageResource } from './resources/addition-image.resource';
+import { GuarantyResource } from './resources/guaranty.resource';
 
 import { dataSource } from '../database/data-source';
 import { locale } from './locale';
@@ -62,11 +64,13 @@ export default async function initAdminPanel(
       ProductAdditionResource,
       ProductImageResource,
       ProductModelResource,
+      ProductGuarantyResource,
       AdditionImageResource,
       UserResource,
       RoleResource,
       ImageResource(uploadFeature, componentLoader, uploadFileFeature),
       ModelResource(uploadFeature, componentLoader, uploadFileFeature),
+      GuarantyResource,
     ],
     locale: locale,
     componentLoader,
