@@ -83,7 +83,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
   const [product, setProduct] = useState<Product | null>(null);
   useEffect(() => {
     (async () => {
-      const { data: product } = await fetchProductById(5);
+      const { data: product } = await fetchProductById(1);
       setProduct(product);
     })();
   }, []);
@@ -112,7 +112,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                 {/* {<Photo photo={photo} model={'/assets/scene.glb'} />} */}
                 {
                   <Model
-                    modelUrl={product?.models[2].model.url ?? ''}
+                    modelUrl={product?.models[0].model.url ?? ''}
                     color={photo}
                     option1={option1}
                   />
