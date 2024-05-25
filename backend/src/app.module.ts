@@ -16,7 +16,6 @@ import { ConfigurationsModule } from './configurations/configurations.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
-import { DurationModule } from './duration/duration.module';
 import { GuarantyModule } from './guaranty/guaranty.module';
 
 @Module({
@@ -26,7 +25,7 @@ import { GuarantyModule } from './guaranty/guaranty.module';
         NODE_ENV: Joi.string()
           .valid('development', 'production', 'test', 'provision')
           .default('development'),
-        PORT: Joi.number().port().default(3000),
+        PORT: Joi.number().port().default(3001),
 
         POSTGRES_HOST: Joi.string().required(),
         POSTGRES_PORT: Joi.number().required(),
@@ -79,7 +78,6 @@ import { GuarantyModule } from './guaranty/guaranty.module';
     AuthModule,
     UsersModule,
     RolesModule,
-    DurationModule,
     GuarantyModule,
   ],
   controllers: [AppController],

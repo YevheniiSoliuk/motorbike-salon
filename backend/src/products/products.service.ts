@@ -26,7 +26,6 @@ export class ProductsService {
         'images.image',
         'additions.addition.images.image',
         'guaranties.guaranty.image',
-        'guaranties.guaranty.duration',
       ],
     });
   }
@@ -40,7 +39,6 @@ export class ProductsService {
         'images.image',
         'additions.addition.images.image',
         'guaranties.guaranty.image',
-        'guaranties.guaranty.duration',
       ],
       where: {
         id,

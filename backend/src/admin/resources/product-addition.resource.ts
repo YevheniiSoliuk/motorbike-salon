@@ -84,7 +84,7 @@ async function validateForm(request, context) {
   const { name } = payload;
   const errors: any = {};
 
-  if (!name.trim().length) {
+  if (!name || !name.trim().length) {
     errors.name = {
       message: 'Name is required',
     };
