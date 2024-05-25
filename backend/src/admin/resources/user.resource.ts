@@ -83,7 +83,11 @@ async function isAccessibleForCurrentAdmin(context) {
   const { record, currentAdmin } = context;
   const user = await getFullUser(record?.params?.id);
 
-  return currentAdmin.role.name === 'super-admin' && user.role.name !== 'user';
+  return (
+    currentAdmin.role.name === 'super-admin' &&
+    user &&
+    user.role.name !== 'user'
+  );
 }
 
 async function validateForm(request, context) {
