@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { GuarantyModule } from './guaranty/guaranty.module';
+import { GcloudModule } from './gcloud/gcloud.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { GuarantyModule } from './guaranty/guaranty.module';
         FIREBASE_APP_ID: Joi.string().required(),
 
         GC_SERVICE_ACCOUNT: Joi.string().required(),
+        GOOGLE_APPLICATION_CREDENTIALS: Joi.string().required(),
 
         ADMIN_PANEL_EMAIL: Joi.string().required(),
         ADMIN_PANEL_PASSWORD: Joi.string().required(),
@@ -79,6 +81,7 @@ import { GuarantyModule } from './guaranty/guaranty.module';
     UsersModule,
     RolesModule,
     GuarantyModule,
+    GcloudModule,
   ],
   controllers: [AppController],
   providers: [AppService],
