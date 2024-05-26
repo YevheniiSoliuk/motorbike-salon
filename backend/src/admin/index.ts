@@ -87,6 +87,12 @@ export default async function initAdminPanel(
     adminPanel,
     authOptions,
     null,
+    {
+      resave: true,
+      saveUninitialized: true,
+      secret: 'adminjs',
+    },
   );
+
   app.use(adminPanel.options.rootPath, adminRouter);
 }
