@@ -3,7 +3,7 @@ import { pl } from './pl';
 
 export const locale = {
   language: 'en',
-  availableLanguages: ['en', 'pl'],
+  availableLanguages: ['en'],
   localeDetection: true,
   translations: {
     pl: pl,

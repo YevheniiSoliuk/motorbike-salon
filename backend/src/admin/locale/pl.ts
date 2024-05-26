@@ -3,8 +3,18 @@ export const pl = {
     welcomeOnBoard_title: 'Nowy tyluł pulpitu',
     nameRequiredError: 'Nazwa jest wymagana',
   },
+  components: {
+    DropZone: {
+      placeholder: 'Przeciągnij plik tutaj lub kliknij aby wybrać',
+      acceptedSize: 'Maks. rozmiar: {{maxSize}}',
+      acceptedType: 'Dozwolone pliki: {{mimeTypes}}',
+      unsupportedSize: 'Plik {{fileName}} jest zbyt duży',
+      unsupportedType:
+        'Plik {{fileName}} jest niedozwolonego typu: {{fileType}}',
+    },
+  },
   labels: {
-    Dashboard: 'Panel główny',
+    dashboard: 'Panel główny',
     Category: 'Kategoria',
     Discount: 'Rabat',
     Product: 'Produkt',
@@ -50,6 +60,8 @@ export const pl = {
         catalogNumber: 'Numer katalogowy',
         category: 'Kategoria',
         discount: 'Rabat',
+        'category.id': 'Kategoria',
+        'discount.id': 'Rabat',
       },
     },
     Image: {
@@ -62,6 +74,17 @@ export const pl = {
       properties: {
         name: 'Nazwa',
         file: 'Plik',
+        'name.nameRequiredError': 'Nazwa jest wymagana',
+      },
+      components: {
+        DropZone: {
+          placeholder: 'Upuść plik tutaj lub kliknij, aby przeglądać',
+          acceptedSize: 'Maksymalny rozmiar: {{maxSize}}',
+          acceptedType: 'Obsługuje: {{mimeTypes}}',
+          unsupportedSize: 'Plik {{fileName}} jest za duży',
+          unsupportedType:
+            'Plik {{fileName}} ma nieobsługiwany typ: {{fileType}}',
+        },
       },
     },
     Addition: {
@@ -124,7 +147,7 @@ export const pl = {
         name: 'Nazwa',
         image: 'Obrazek',
         addition: 'Dodatek',
-        productId: 'Id produktu',
+        imageId: 'Id obrazku',
         additionId: 'Id dodatku',
       },
     },
@@ -133,11 +156,11 @@ export const pl = {
         name: 'Nazwa',
         description: 'Opis',
         price: 'Cena',
-        durationId: 'Id czasu trwania',
         imageId: 'Id obrazku',
         period: 'Okres',
         duration: 'Czas trwania',
         image: 'Obrazek',
+        'image.id': 'Obrazek',
       },
     },
   },
