@@ -16,28 +16,28 @@ const Model = ({ modelUrl, color, option1 }: ModelProps) => {
       modelViewer.model.materials[18] &&
       !('optionNumber' in color)
     ) {
-      modelViewer.model.materials[30].pbrMetallicRoughness.baseColorTexture.setTexture(
+      modelViewer.model.materials[14].pbrMetallicRoughness.baseColorTexture.setTexture(
         null,
       );
-      modelViewer.model.materials[30].pbrMetallicRoughness.setBaseColorFactor(
+      modelViewer.model.materials[14].pbrMetallicRoughness.setBaseColorFactor(
         color,
       );
     } else {
       if ('optionNumber' in color) {
         if (color.optionNumber == 1) {
-          modelViewer.model.materials[31].pbrMetallicRoughness.setBaseColorFactor(
+          modelViewer.model.materials[16].pbrMetallicRoughness.setBaseColorFactor(
             [0, 0, 0, 1],
           );
 
-          modelViewer.model.materials[58].pbrMetallicRoughness.setBaseColorFactor(
+          modelViewer.model.materials[20].pbrMetallicRoughness.setBaseColorFactor(
             [0, 0, 0, -1],
           );
         } else if (color.optionNumber == 2) {
-          modelViewer.model.materials[31].pbrMetallicRoughness.setBaseColorFactor(
+          modelViewer.model.materials[16].pbrMetallicRoughness.setBaseColorFactor(
             [0, 0, 0, -1],
           );
 
-          modelViewer.model.materials[58].pbrMetallicRoughness.setBaseColorFactor(
+          modelViewer.model.materials[20].pbrMetallicRoughness.setBaseColorFactor(
             [0, 0, 0, 1],
           );
         }
@@ -45,10 +45,10 @@ const Model = ({ modelUrl, color, option1 }: ModelProps) => {
     }
 
     function onModelLoad() {
-      modelViewer.model.materials[30].pbrMetallicRoughness.baseColorTexture.setTexture(
+      modelViewer.model.materials[14].pbrMetallicRoughness.baseColorTexture.setTexture(
         null,
       );
-      modelViewer.model.materials[30].pbrMetallicRoughness.setBaseColorFactor(
+      modelViewer.model.materials[14].pbrMetallicRoughness.setBaseColorFactor(
         color,
       );
     }
