@@ -4,7 +4,7 @@ import Price from './Price';
 import Photo from './Photo';
 import Summary from '../Summary';
 import App from '../App';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   Route,
   Switch,
@@ -13,27 +13,31 @@ import {
 } from 'react-router-dom';
 import '../Sass/Product.scss';
 import Model from './Model';
-import { Product, fetchProductById } from '../api/products';
+import { Product, ProductAddition, fetchProductById } from '../api/products';
+import { AxiosResponse } from 'axios';
 
-interface TestProps {
-  order?: {
-    id: string;
-    photo: string;
-    model: string;
-    price: string;
-    description: Object;
-  };
-}
+// interface TestProps {
+//   order?: {
+//     id: string;
+//     photo: string;
+//     model: string;
+//     price: string;
+//     description: Object;
+//   };
+// }
 
-const Dropdown: React.FC<TestProps> = ({ order }: any) => {
+const Dropdown: React.FC = () => {
+  const params = useParams<{ productId: string }>();
   const [firstMenu, setFirstMenu] = useState<boolean>(true);
   const [secondMenu, setSecondMenu] = useState<boolean>(true);
   const [thirdMenu, setThirdMenu] = useState<boolean>(true);
 
   const [firstMenuPrice, setFirstMenuPrice] = useState(0);
   const [secondMenuPrice, setSecondPrice] = useState(0);
-  const [photo, setPhoto] = useState(order.description[0].color[0].photo);
-  const [option1, setOption1] = useState(order.description[0].color[0].option1);
+  const [photo, setPhoto] = useState([0, 0, 0.1, 1, 1]);
+  const [option1, setOption1] = useState([0, 0.2, 0, 1]);
+  const [color, setColor] = useState<ProductAddition | null>(null);
+  const [material, setMaterial] = useState<ProductAddition | null>(null);
 
   const [clearFirstMenu, setClearFirstMenu] = useState(false);
   const [clearSecondMenu, setClearSecondMenu] = useState(false);
@@ -58,12 +62,22 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
   const handleSecondMenuPriceChange = (price: number) => {
     setSecondPrice(price);
   };
-  const photoChange = (photo: any) => {
-    if (photo !== undefined) {
-      setPhoto(photo);
-    } else if (option1 !== undefined) {
-      setPhoto(option1);
+  const photoChange = (item: ProductAddition) => {
+    switch (item.modelPartType) {
+      case 'color':
+        setColor(item);
+        break;
+      case 'material':
+        setMaterial(item);
+        break;
+      default:
+        break;
     }
+    // if (photo !== undefined) {
+    //   setPhoto(photo);
+    // } else if (option1 !== undefined) {
+    //   setPhoto(option1);
+    // }
   };
   const handleClearFirstSelectedOptions = () => {
     setClearFirstMenu(true);
@@ -83,23 +97,38 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
   const [product, setProduct] = useState<Product | null>(null);
   useEffect(() => {
     (async () => {
-      const { data: product } = await fetchProductById(5);
+      const { data: product }: AxiosResponse<Product> = await fetchProductById(
+        Number(params.productId),
+      );
+      console.log(product);
       setProduct(product);
+      setColor(
+        product.additions.find(
+          (addition) =>
+            addition.modelPartType === 'color' && addition.isDefault,
+        ) ?? null,
+      );
+      setMaterial(
+        product.additions.find(
+          (addition) =>
+            addition.modelPartType === 'material' && addition.isDefault,
+        ) ?? null,
+      );
     })();
-  }, []);
+  }, [params.productId]);
 
   return (
     <>
       <HashRouter basename={process.env.PUBLIC_URL}>
         <Switch>
-          <Route path={'/' + order.model}>
+          <Route path={`/models/${params.productId}`}>
             <div className='titlePriceWrapper'>
-              <h1 className='model-title'>{order.model}</h1>
+              <h1 className='model-title'>{product?.name}</h1>
 
               <Price
                 firstPrice={firstMenuPrice}
                 secondPrice={secondMenuPrice}
-                baseAmount={order.price}
+                baseAmount={product?.price}
                 orderPriceChange={handleOrderPriceChange}
               />
             </div>
@@ -109,14 +138,18 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
             </Link>
             <div className='contentContainer'>
               <div className='imageWrapper'>
-                {/* {<Photo photo={photo} model={'/assets/scene.glb'} />} */}
                 {
                   <Model
-                    modelUrl={
-                      product?.models[1].model.url ?? '/assets/motor.glb'
+                    modelUrl={product?.models[0].model.url ?? ''}
+                    color={color}
+                    selectedMaterial={material}
+                    materials={
+                      product
+                        ? product?.additions.filter(
+                            (addition) => addition.modelPartType === 'material',
+                          )
+                        : []
                     }
-                    color={photo}
-                    option1={option1}
                   />
                 }
               </div>
@@ -139,7 +172,14 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                       <SubMenu
                         price={handleFirstMenuPriceChange}
                         photoChange={photoChange}
-                        content={order.description[0].color}
+                        content={
+                          product?.additions
+                            ? product?.additions.filter(
+                                (addition) =>
+                                  addition.modelPartType === 'color',
+                              )
+                            : []
+                        }
                         clearedFunction={handleClearFirstMenu}
                         cleared={clearFirstMenu}
                       />
@@ -160,7 +200,14 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                       <SubMenu
                         price={handleSecondMenuPriceChange}
                         photoChange={photoChange}
-                        content={order.description[0].additions}
+                        content={
+                          product?.additions
+                            ? product?.additions.filter(
+                                (addition) =>
+                                  addition.modelPartType === 'material',
+                              )
+                            : []
+                        }
                         clearedFunction={handleClearSecondMenu}
                         cleared={clearSecondMenu}
                       />
@@ -177,7 +224,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
                 <div className='dropdownWrapper'>
                   <p className='model-description'>
                     {firstMenu ? (
-                      <SubMenu content={order.description[0].description} />
+                      <SubMenu content={product?.description} />
                     ) : null}
                   </p>
                 </div>
@@ -192,7 +239,7 @@ const Dropdown: React.FC<TestProps> = ({ order }: any) => {
             <App />
           </Route>
           <Route exact path={'/summary'}>
-            <Summary order={order} price={orderPrice} />
+            <Summary order={product} price={orderPrice} />
           </Route>
         </Switch>
       </HashRouter>

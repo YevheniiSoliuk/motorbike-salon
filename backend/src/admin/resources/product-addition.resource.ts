@@ -6,9 +6,33 @@ export const ProductAdditionResource = {
   resource: ProductAddition,
   options: {
     navigation: productsNavigation,
-    listProperties: ['name', 'product', 'addition'],
-    showProperties: ['name', 'product', 'addition'],
-    filterProperties: ['name', 'product', 'addition'],
+    listProperties: [
+      'name',
+      'modelMaterialIndex',
+      'modelPartType',
+      'modelTextureType',
+      'rgba',
+      'isDefault',
+      'product',
+      'addition',
+    ],
+    showProperties: [
+      'name',
+      'modelMaterialIndex',
+      'modelPartType',
+      'modelTextureType',
+      'rgba',
+      'isDefault',
+      'addition',
+    ],
+    filterProperties: [
+      'name',
+      'modelPartType',
+      'modelTextureType',
+      'isDefault',
+      'product',
+      'addition',
+    ],
     properties: {
       product: {
         type: 'string',
@@ -81,7 +105,7 @@ async function validateForm(request, context) {
   const { payload, method } = request;
 
   if (method !== 'post') return request;
-  const { name } = payload;
+  const { name, modelMaterialIndex, rgba } = payload;
   const errors: any = {};
 
   if (!name || !name.trim().length) {
@@ -91,6 +115,20 @@ async function validateForm(request, context) {
   } else if (!new RegExp(/^[a-zA-Z0-9 -_]+$/, 'gi').test(name)) {
     errors.name = {
       message: 'Name must contain latin letters',
+    };
+  }
+
+  if (!modelMaterialIndex || !modelMaterialIndex.trim().length) {
+    errors.modelMaterialIndex = {
+      message: 'Model material index is required',
+    };
+  } else if (isNaN(Number(modelMaterialIndex))) {
+    errors.modelMaterialIndex = {
+      message: 'Model material index must be a number',
+    };
+  } else if (modelMaterialIndex < 1 || modelMaterialIndex > 100) {
+    errors.modelMaterialIndex = {
+      message: 'Model material index must be in range from 1% to 100%',
     };
   }
 

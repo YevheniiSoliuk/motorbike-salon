@@ -13,18 +13,18 @@ import {
 } from 'react-router-dom';
 
 const App = () => {
-  const RouteMaker = () => {
-    const route = list.map((item) => {
-      return (
-        <div key={item.id}>
-          <Route path={'/' + item.model}>
-            <Product order={item} />
-          </Route>
-        </div>
-      );
-    });
-    return <>{route}</>;
-  };
+  // const RouteMaker = () => {
+  //   const route = list.map((item) => {
+  //     return (
+  //       <div key={item.id}>
+  //         <Route path={'/' + item.model}>
+  //           <Product order={item} />
+  //         </Route>
+  //       </div>
+  //     );
+  //   });
+  //   return <>{route}</>;
+  // };
   return (
     <HashRouter basename={process.env.PUBLIC_URL}>
       <Switch>
@@ -85,7 +85,10 @@ const App = () => {
         </Route>
       </Switch>
 
-      <RouteMaker />
+      {/* <RouteMaker /> */}
+      <Route path={'/models/:productId'}>
+        <Product />
+      </Route>
     </HashRouter>
   );
 };
