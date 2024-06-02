@@ -1,5 +1,6 @@
 import '../Sass/SubMenu.scss';
 import { useEffect } from 'react';
+import { ProductAddition } from '../api/products';
 
 const SubMenu = ({
   content,
@@ -8,21 +9,21 @@ const SubMenu = ({
   cleared,
   clearedFunction,
 }: any) => {
-  const optionList = content;
+  const optionList = content as ProductAddition[];
 
   const handleClearContent = () => {
-    optionList.map((element: any) => {
-      if (!element.default) {
-        return (element.active = false);
-      } else {
-        if (element.hasOwnProperty('option')) {
-          photoChange(element.option);
-        } else {
-          photoChange(element.photo);
-        }
-        return (element.active = true);
-      }
-    });
+    // optionList.map((element: ProductAddition) => {
+    //   if (!element.isDefault) {
+    //     return (element.active = false);
+    //   } else {
+    //     if (element.hasOwnProperty('option')) {
+    //       photoChange(element.option);
+    //     } else {
+    //       photoChange(element.photo);
+    //     }
+    //     return (element.active = true);
+    //   }
+    // });
     clearedFunction(false);
   };
   useEffect(() => {
@@ -35,18 +36,15 @@ const SubMenu = ({
     option: any,
     photo: any,
     addOrRemove: number,
-    item: any,
+    item: ProductAddition,
   ) => {
     if (addOrRemove === 1) {
       price(option);
     } else {
       price(option);
     }
-    if (item.hasOwnProperty('option')) {
-      photoChange(item.option);
-    } else {
-      photoChange(photo);
-    }
+
+    photoChange(item);
   };
 
   const handleSelectOption = (selected: any) => {
@@ -62,31 +60,43 @@ const SubMenu = ({
 
     //setOptionList(() => tab);
   };
+
   if (typeof content === 'string') {
     return <>{content}</>;
   } else {
     return (
       <>
-        {optionList.map((item: any) => {
+        {optionList?.map((item: ProductAddition) => {
           return (
             <div
-              className={`box ${!item.active ? '' : 'active'}`}
+              className={`box ${!item.isDefault ? '' : 'active'}`}
               onClick={() => handleSelectOption(item)}
-              key={item.name}
+              key={item.id}
             >
               <div
                 className={`optionBox `}
                 onClick={() => {
-                  handleClick(item.price, item.photo, 1, item);
+                  handleClick(
+                    item.addition.price,
+                    item.addition.images.length
+                      ? item.addition.images[0].image.url
+                      : '/photos/r1250rs/warranty-photo.jfif',
+                    1,
+                    item,
+                  );
                 }}
               >
                 <img
                   className='optionImg'
-                  src={item.additionPhoto}
+                  src={
+                    item.addition.images.length
+                      ? item.addition.images[0].image.url
+                      : '/photos/r1250rs/warranty-photo.jfif'
+                  }
                   alt='option'
                 />
                 <span className='optionDescription'>
-                  {item.name}, koszt {item.price} zł
+                  {item.addition.name}, koszt {item.addition.price} zł
                 </span>
               </div>
             </div>

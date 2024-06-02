@@ -1,63 +1,77 @@
 import { useEffect, useRef } from 'react';
 import type { ModelViewerElement } from '@google/model-viewer/lib/model-viewer';
 import '@google/model-viewer/dist/model-viewer';
+import { ProductAddition } from '../api/products';
+
 type ModelProps = {
   modelUrl: string;
-  color: Array<number> | Object;
-  option1: Array<number>;
+  color: ProductAddition | null;
+  selectedMaterial: ProductAddition | null;
+  materials: ProductAddition[];
 };
 
-const Model = ({ modelUrl, color, option1 }: ModelProps) => {
-  const modelRef: any = useRef<ModelViewerElement>();
+const Model = ({
+  modelUrl,
+  color,
+  selectedMaterial,
+  materials,
+}: ModelProps) => {
+  const modelRef = useRef<ModelViewerElement>();
+
   useEffect(() => {
     const modelViewer: any = document.querySelector('model-viewer');
-    if (
-      modelViewer.model &&
-      modelViewer.model.materials[18] &&
-      !('optionNumber' in color)
-    ) {
-      modelViewer.model.materials[14].pbrMetallicRoughness.baseColorTexture.setTexture(
-        null,
-      );
-      modelViewer.model.materials[14].pbrMetallicRoughness.setBaseColorFactor(
-        color,
-      );
-    } else {
-      if ('optionNumber' in color) {
-        if (color.optionNumber == 1) {
-          modelViewer.model.materials[16].pbrMetallicRoughness.setBaseColorFactor(
-            [0, 0, 0, 1],
-          );
 
-          modelViewer.model.materials[20].pbrMetallicRoughness.setBaseColorFactor(
-            [0, 0, 0, -1],
-          );
-        } else if (color.optionNumber == 2) {
-          modelViewer.model.materials[16].pbrMetallicRoughness.setBaseColorFactor(
-            [0, 0, 0, -1],
-          );
+    if (modelRef.current && modelRef.current?.model) {
+      if (color) {
+        modelViewer.model.materials[
+          color.modelMaterialIndex
+        ].pbrMetallicRoughness.baseColorTexture.setTexture(null);
+        modelViewer.model.materials[
+          color.modelMaterialIndex
+        ].pbrMetallicRoughness.setBaseColorFactor(color.rgba);
+      }
 
-          modelViewer.model.materials[20].pbrMetallicRoughness.setBaseColorFactor(
-            [0, 0, 0, 1],
-          );
-        }
+      if (selectedMaterial) {
+        modelViewer.model.materials[
+          selectedMaterial.modelMaterialIndex
+        ].pbrMetallicRoughness.setBaseColorFactor([0, 0, 0, 1]);
+
+        materials.forEach((material) => {
+          if (material.id !== selectedMaterial.id) {
+            modelViewer.model.materials[
+              material.modelMaterialIndex
+            ].pbrMetallicRoughness.setBaseColorFactor([0, 0, 0, -1]);
+          }
+        });
       }
     }
 
     function onModelLoad() {
-      modelViewer.model.materials[14].pbrMetallicRoughness.baseColorTexture.setTexture(
-        null,
-      );
-      modelViewer.model.materials[14].pbrMetallicRoughness.setBaseColorFactor(
-        color,
-      );
+      if (modelRef.current && modelRef.current?.model) {
+        if (color) {
+          modelViewer.model.materials[
+            color.modelMaterialIndex
+          ].pbrMetallicRoughness.baseColorTexture.setTexture(null);
+          modelViewer.model.materials[
+            color.modelMaterialIndex
+          ].pbrMetallicRoughness.setBaseColorFactor(color.rgba);
+        }
+
+        if (selectedMaterial) {
+          modelViewer.model.materials[
+            selectedMaterial.modelMaterialIndex
+          ].pbrMetallicRoughness.setBaseColorFactor([0, 0, 0, 1]);
+        }
+      }
     }
+
     modelViewer.addEventListener('load', onModelLoad);
 
     return () => {
       modelViewer.removeEventListener('load', onModelLoad);
     };
-  }, [color]);
+  }, [color, selectedMaterial, materials]);
+
   return (
     <div>
       <model-viewer

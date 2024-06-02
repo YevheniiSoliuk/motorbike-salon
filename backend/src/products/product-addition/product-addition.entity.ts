@@ -6,7 +6,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import ProductAdditionDto from './product-addition.dto';
+import ProductAdditionDto, {
+  ModelPart,
+  ModelTexture,
+} from './product-addition.dto';
 import Product from '../entities/product.entity';
 import Addition from 'src/additions/entities/addition.entity';
 
@@ -20,6 +23,21 @@ export default class ProductAddition
 
   @Column('varchar', { nullable: false, unique: true })
   name: string;
+
+  @Column('int', { nullable: true })
+  modelMaterialIndex: number;
+
+  @Column('enum', { enum: ModelPart, nullable: true })
+  modelPartType: ModelPart;
+
+  @Column('enum', { enum: ModelTexture, nullable: true })
+  modelTextureType: ModelTexture;
+
+  @Column('decimal', { array: true, nullable: true, precision: 5, scale: 2 })
+  rgba: [number, number, number, number];
+
+  @Column('bool', { default: false })
+  isDefault: boolean;
 
   @ManyToOne(() => Product, (product) => product.additions)
   @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
