@@ -34,6 +34,17 @@ export default async function initAdminPanel(
   const uploadFeature = await import('@adminjs/upload');
   const componentLoader = new ComponentLoader();
 
+  const Components = {
+    ModelMaterialSelect: componentLoader.add(
+      'ModelMaterialSelect',
+      './components/ModelMaterialSelect',
+    ),
+    ColorPicker: componentLoader.add(
+      'ColorPicker',
+      './components/ColorPicker/index',
+    ),
+  };
+
   AdminJS.registerAdapter({
     Resource: AdminJSTypeorm.Resource,
     Database: AdminJSTypeorm.Database,
@@ -61,7 +72,10 @@ export default async function initAdminPanel(
       CategoryResource,
       ProductResource,
       AdditionResource,
-      ProductAdditionResource,
+      ProductAdditionResource(
+        Components.ModelMaterialSelect,
+        Components.ColorPicker,
+      ),
       ProductImageResource,
       ProductModelResource,
       ProductGuarantyResource,

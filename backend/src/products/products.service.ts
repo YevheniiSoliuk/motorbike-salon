@@ -5,12 +5,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import Product from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { UUID } from 'crypto';
+import ProductModel from './product-model/product-model.entity';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    @InjectRepository(ProductModel)
+    private readonly productModelRepository: Repository<ProductModel>,
   ) {}
 
   create(createProductDto: CreateProductDto) {
@@ -23,8 +26,8 @@ export class ProductsService {
         'category',
         'discount',
         'models.model',
+        'models.additions.addition.images.image',
         'images.image',
-        'additions.addition.images.image',
         'guaranties.guaranty.image',
       ],
     });
@@ -36,8 +39,8 @@ export class ProductsService {
         'category',
         'discount',
         'models.model',
+        'models.additions.addition.images.image',
         'images.image',
-        'additions.addition.images.image',
         'guaranties.guaranty.image',
       ],
       where: {
@@ -50,6 +53,15 @@ export class ProductsService {
     return await this.productRepository.findOne({
       where: {
         uuid,
+      },
+    });
+  }
+
+  async getModelById(id: number) {
+    return await this.productModelRepository.findOne({
+      relations: ['model'],
+      where: {
+        id,
       },
     });
   }

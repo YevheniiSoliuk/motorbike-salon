@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsUrl } from 'class-validator';
-import ProductDto from '../../products/dto/product.dto';
 import ProductModelDto from 'src/products/product-model/product-model.dto';
 import { Type } from 'class-transformer';
 

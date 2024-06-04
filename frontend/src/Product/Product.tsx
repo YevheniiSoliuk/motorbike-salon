@@ -103,13 +103,13 @@ const Dropdown: React.FC = () => {
       console.log(product);
       setProduct(product);
       setColor(
-        product.additions.find(
+        product.models[0].additions.find(
           (addition) =>
             addition.modelPartType === 'color' && addition.isDefault,
         ) ?? null,
       );
       setMaterial(
-        product.additions.find(
+        product.models[0].additions.find(
           (addition) =>
             addition.modelPartType === 'material' && addition.isDefault,
         ) ?? null,
@@ -145,7 +145,7 @@ const Dropdown: React.FC = () => {
                     selectedMaterial={material}
                     materials={
                       product
-                        ? product?.additions.filter(
+                        ? product?.models[0].additions.filter(
                             (addition) => addition.modelPartType === 'material',
                           )
                         : []
@@ -173,8 +173,8 @@ const Dropdown: React.FC = () => {
                         price={handleFirstMenuPriceChange}
                         photoChange={photoChange}
                         content={
-                          product?.additions
-                            ? product?.additions.filter(
+                          product?.models[0].additions
+                            ? product?.models[0].additions.filter(
                                 (addition) =>
                                   addition.modelPartType === 'color',
                               )
@@ -201,8 +201,8 @@ const Dropdown: React.FC = () => {
                         price={handleSecondMenuPriceChange}
                         photoChange={photoChange}
                         content={
-                          product?.additions
-                            ? product?.additions.filter(
+                          product?.models[0].additions
+                            ? product?.models[0].additions.filter(
                                 (addition) =>
                                   addition.modelPartType === 'material',
                               )

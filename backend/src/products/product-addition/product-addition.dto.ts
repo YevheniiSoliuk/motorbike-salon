@@ -7,9 +7,9 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import ProductDto from '../dto/product.dto';
 import AdditionDto from 'src/additions/dto/addition.dto';
 import { Exclude } from 'class-transformer';
+import ProductModelDto from '../product-model/product-model.dto';
 
 export enum ModelPart {
   Color = 'color',
@@ -58,8 +58,8 @@ export default class ProductAdditionDto {
   @IsBoolean()
   isDefault: boolean;
 
-  @ApiProperty({ type: () => ProductDto })
-  product: ProductDto;
+  @ApiProperty({ type: () => ProductModelDto })
+  productModel: ProductModelDto;
 
   @ApiProperty({ type: () => AdditionDto })
   addition: AdditionDto;

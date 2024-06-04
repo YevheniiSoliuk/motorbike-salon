@@ -34,7 +34,8 @@ export const en = {
     },
     ProductAddition: {
       properties: {
-        'product.id': 'Product',
+        isDefault: 'Default',
+        'productModel.id': 'Product Model',
         'addition.id': 'Addition',
       },
     },

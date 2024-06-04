@@ -22,6 +22,7 @@ import { Response } from 'express';
 import ProductDto from './dto/product.dto';
 import JwtGuard from 'src/auth/guards/jwt.guard';
 import { plainToInstance } from 'class-transformer';
+import ProductModelDto from './product-model/product-model.dto';
 
 @ApiTags('Products')
 @Controller('products')
@@ -54,6 +55,15 @@ export class ProductsController {
     res
       .status(200)
       .json(plainToInstance(ProductDto, product, { strategy: 'exposeAll' }));
+  }
+
+  @Get('/model/:id')
+  async findProductModelById(@Param('id') id: string, @Res() res: Response) {
+    const model = await this.productsService.getModelById(+id);
+
+    res
+      .status(200)
+      .json(plainToInstance(ProductModelDto, model, { strategy: 'exposeAll' }));
   }
 
   @UseGuards(JwtGuard)
