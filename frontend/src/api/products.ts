@@ -14,11 +14,9 @@ type Discount = {
 };
 
 type Model = {
-  model: {
-    id: number;
-    name: string;
-    url: string;
-  };
+  id: number;
+  name: string;
+  url: string;
 };
 
 type Image = {
@@ -49,6 +47,14 @@ type ModelTextureType =
   | 'baseColorTexture'
   | 'metallicRoughnessTexture';
 
+export type ProductModel = {
+  id: number;
+  name: string;
+  product: Product;
+  model: Model;
+  additions: ProductAddition[];
+};
+
 export type ProductAddition = {
   id: number;
   modelMaterialIndex: number;
@@ -57,6 +63,7 @@ export type ProductAddition = {
   rgba: [number, number, number, number];
   isDefault: boolean;
   addition: Addition;
+  productModel: ProductModel;
 };
 
 export type Product = {
@@ -68,8 +75,7 @@ export type Product = {
   catalogNumber: string;
   category: Category;
   discount: Discount;
-  models: Model[];
-  additions: ProductAddition[];
+  models: ProductModel[];
   guaranties: any;
   images: ItemImage[];
 };

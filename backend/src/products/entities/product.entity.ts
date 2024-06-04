@@ -52,12 +52,6 @@ export default class Product extends BaseEntity implements ProductDto {
   images: ProductImage[];
 
   @OneToMany(
-    () => ProductAddition,
-    (productAddition) => productAddition.product,
-  )
-  additions: ProductAddition[];
-
-  @OneToMany(
     () => ProductGuaranty,
     (productGuaranty) => productGuaranty.product,
   )

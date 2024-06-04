@@ -49,10 +49,6 @@ export default class ProductDto {
   @Type(() => ProductModelDto)
   models: ProductModelDto[];
 
-  @ApiProperty({ type: () => [ProductAdditionDto] })
-  @Type(() => ProductAdditionDto)
-  additions: ProductAdditionDto[];
-
   @ApiProperty({ type: () => [ProductGuarantyDto] })
   @Type(() => ProductGuarantyDto)
   guaranties: ProductGuarantyDto[];

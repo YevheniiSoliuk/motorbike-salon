@@ -10,8 +10,8 @@ import ProductAdditionDto, {
   ModelPart,
   ModelTexture,
 } from './product-addition.dto';
-import Product from '../entities/product.entity';
 import Addition from 'src/additions/entities/addition.entity';
+import ProductModel from '../product-model/product-model.entity';
 
 @Entity()
 export default class ProductAddition
@@ -39,9 +39,9 @@ export default class ProductAddition
   @Column('bool', { default: false })
   isDefault: boolean;
 
-  @ManyToOne(() => Product, (product) => product.additions)
-  @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
-  product: Product;
+  @ManyToOne(() => ProductModel, (productModel) => productModel.additions)
+  @JoinColumn({ name: 'productModelId', referencedColumnName: 'id' })
+  productModel: ProductModel;
 
   @ManyToOne(() => Addition, (addition) => addition.products)
   @JoinColumn({ name: 'additionId', referencedColumnName: 'id' })

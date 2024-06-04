@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "declaration": true,
@@ -12,6 +13,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "allowJs": true,
+  },
+  "include": ["src", "src/env.ts", "src/admin/types/resct.d.ts", "src/admin/types/google-model-viewer.d.ts"]
 }

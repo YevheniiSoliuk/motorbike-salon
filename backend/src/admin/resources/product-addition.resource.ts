@@ -2,39 +2,44 @@ import ProductAddition from 'src/products/product-addition/product-addition.enti
 import { productsNavigation } from '../constants';
 import { dataSource } from 'src/database/data-source';
 
-export const ProductAdditionResource = {
+export const ProductAdditionResource = (
+  select: string,
+  colorPicker: string,
+) => ({
   resource: ProductAddition,
   options: {
     navigation: productsNavigation,
-    listProperties: [
-      'name',
-      'modelMaterialIndex',
-      'modelPartType',
-      'modelTextureType',
-      'rgba',
-      'isDefault',
-      'product',
-      'addition',
-    ],
+    listProperties: ['name', 'productModel', 'addition', 'isDefault'],
     showProperties: [
       'name',
-      'modelMaterialIndex',
+      'productModel',
+      'addition',
+      'modelMaterial',
+      'modelTextureType',
+      'modelPartType',
+      'rgba',
+      'isDefault',
+    ],
+    editProperties: [
+      'name',
+      'productModel.id',
+      'addition.id',
+      'modelMaterial',
       'modelPartType',
       'modelTextureType',
       'rgba',
       'isDefault',
-      'addition',
     ],
     filterProperties: [
       'name',
       'modelPartType',
       'modelTextureType',
       'isDefault',
-      'product',
+      'productModel',
       'addition',
     ],
     properties: {
-      product: {
+      productModel: {
         type: 'string',
         isVisible: {
           edit: false,
@@ -44,6 +49,18 @@ export const ProductAdditionResource = {
         type: 'string',
         isVisible: {
           edit: false,
+        },
+      },
+      modelMaterial: {
+        components: {
+          edit: select,
+          new: select,
+        },
+      },
+      rgba: {
+        components: {
+          edit: colorPicker,
+          new: colorPicker,
         },
       },
     },
@@ -59,10 +76,11 @@ export const ProductAdditionResource = {
       },
       edit: {
         before: [validateForm],
+        after: [afterFormShowing],
       },
     },
   },
-};
+});
 
 async function afterShowList(res) {
   const { records } = res;
@@ -87,10 +105,10 @@ async function afterShowDetails(res) {
 async function formatRecord(params) {
   const productAddition = await getFullProductAddition(params.id);
 
-  if (!productAddition.product) {
-    params.product = 'N/A';
+  if (!productAddition.productModel) {
+    params.productModel = 'N/A';
   } else {
-    params.product = productAddition.product.name;
+    params.productModel = productAddition.productModel.name;
   }
 
   if (!productAddition.addition) {
@@ -100,12 +118,22 @@ async function formatRecord(params) {
   }
 }
 
+async function afterFormShowing(res) {
+  const params = res.record.params;
+  const productAddition = await getFullProductAddition(params.id);
+
+  params['productModel.id'] = productAddition.productModel.id;
+  params['addition.id'] = productAddition.addition.id;
+
+  return res;
+}
+
 async function validateForm(request, context) {
   const { ValidationError } = await import('adminjs');
   const { payload, method } = request;
 
   if (method !== 'post') return request;
-  const { name, modelMaterialIndex, rgba } = payload;
+  const { name, modelMaterialIndex } = payload;
   const errors: any = {};
 
   if (!name || !name.trim().length) {
@@ -118,23 +146,15 @@ async function validateForm(request, context) {
     };
   }
 
-  if (!modelMaterialIndex || !modelMaterialIndex.trim().length) {
+  if (!modelMaterialIndex) {
     errors.modelMaterialIndex = {
-      message: 'Model material index is required',
-    };
-  } else if (isNaN(Number(modelMaterialIndex))) {
-    errors.modelMaterialIndex = {
-      message: 'Model material index must be a number',
-    };
-  } else if (modelMaterialIndex < 1 || modelMaterialIndex > 100) {
-    errors.modelMaterialIndex = {
-      message: 'Model material index must be in range from 1% to 100%',
+      message: 'Model material is required',
     };
   }
 
-  if (!payload['product.id']) {
-    errors['product.id'] = {
-      message: 'Product ID is required',
+  if (!payload['productModel.id']) {
+    errors['productModel.id'] = {
+      message: 'Product model ID is required',
     };
   }
 
@@ -153,7 +173,7 @@ async function validateForm(request, context) {
 
 async function getFullProductAddition(productAdditionId: number) {
   return await dataSource.getRepository('product_addition').findOne({
-    relations: ['product', 'addition'],
+    relations: ['productModel', 'addition'],
     where: {
       id: productAdditionId,
     },
