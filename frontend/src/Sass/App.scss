@@ -17,6 +17,15 @@ body {
   width: 500px;
   height: 500px;
 }
+.configContainer{
+  display: flex;
+  justify-content: space-between;
+}
+.configSaveButton{
+  width: 92px;
+  height: 50px;
+  margin-top: 15px;
+}
 .cSecond {
   background-color: $color;
 }

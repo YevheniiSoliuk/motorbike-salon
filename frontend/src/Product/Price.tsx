@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 const Price = ({
   firstPrice,
   secondPrice,
@@ -12,7 +12,7 @@ const Price = ({
   });
   return (
     <>
-      <span className="price">{price} zł</span>
+      <span className='price'>{price} zł</span>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import '../Sass/SubMenu.scss';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ProductAddition } from '../api/products';
 
 const SubMenu = ({
@@ -12,18 +12,18 @@ const SubMenu = ({
   const optionList = content as ProductAddition[];
 
   const handleClearContent = () => {
-    // optionList.map((element: ProductAddition) => {
-    //   if (!element.isDefault) {
-    //     return (element.active = false);
-    //   } else {
-    //     if (element.hasOwnProperty('option')) {
-    //       photoChange(element.option);
-    //     } else {
-    //       photoChange(element.photo);
-    //     }
-    //     return (element.active = true);
-    //   }
-    // });
+    optionList.map((element: ProductAddition) => {
+      if (!element.isDefault) {
+        return (element.active = false);
+      } else {
+        //  if (element.hasOwnProperty('option')) {
+        //    photoChange(element.option);
+        //  } else {
+        //    photoChange(element.photo);
+        //  }
+        return (element.active = true);
+      }
+    });
     clearedFunction(false);
   };
   useEffect(() => {
@@ -46,17 +46,19 @@ const SubMenu = ({
 
     photoChange(item);
   };
+  const optionRef = useRef<HTMLDivElement>(null);
 
   const handleSelectOption = (selected: any) => {
     optionList.map((element: any) => {
       element.active = false;
 
-      if (element.name === selected.name) {
+      if (element.id === selected.id) {
         element.active = true;
       }
 
       return element;
     });
+    console.log(optionList);
 
     //setOptionList(() => tab);
   };
@@ -67,11 +69,17 @@ const SubMenu = ({
     return (
       <>
         {optionList?.map((item: ProductAddition) => {
+          var isActive = false;
+          !item.hasOwnProperty('active')
+            ? (isActive = item.isDefault)
+            : (isActive = item.active);
+
           return (
             <div
-              className={`box ${!item.isDefault ? '' : 'active'}`}
+              className={`box ${!isActive ? '' : 'active'}`}
               onClick={() => handleSelectOption(item)}
               key={item.id}
+              ref={optionRef}
             >
               <div
                 className={`optionBox `}

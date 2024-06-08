@@ -15,6 +15,7 @@ import '../Sass/Product.scss';
 import Model from './Model';
 import { Product, ProductAddition, fetchProductById } from '../api/products';
 import { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 // interface TestProps {
 //   order?: {
@@ -43,7 +44,7 @@ const Dropdown: React.FC = () => {
   const [clearSecondMenu, setClearSecondMenu] = useState(false);
 
   const [orderPrice, setOrderPrice] = useState(0);
-
+  const configurationSaveEndpoint = 'your endpoint';
   const handleOrderPriceChange = (price: number) => {
     setOrderPrice(price);
   };
@@ -95,6 +96,24 @@ const Dropdown: React.FC = () => {
   };
 
   const [product, setProduct] = useState<Product | null>(null);
+  const handleSendConfiguration = async () => {
+    if (product != null) {
+      product.models[0].additions.find((addition) => {
+        if (!addition.active && addition.isDefault) {
+          addition.active = true;
+        } else if (!addition.hasOwnProperty('active')) {
+          addition.active = false;
+        }
+      });
+
+      try {
+        const response = await axios.post(configurationSaveEndpoint, product);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
   useEffect(() => {
     (async () => {
       const { data: product }: AxiosResponse<Product> = await fetchProductById(
@@ -155,7 +174,15 @@ const Dropdown: React.FC = () => {
               </div>
               <div className='configWrapper'>
                 <div className='marginConfig'>
-                  <h2 className='configHeader'>Konfiguracja</h2>
+                  <div className='configContainer'>
+                    <h2 className='configHeader'>Konfiguracja</h2>
+                    <button
+                      className='configSaveButton'
+                      onClick={handleSendConfiguration}
+                    >
+                      Zapisz konfiguracje
+                    </button>
+                  </div>
                   <hr className='headerLine' />
                   <div className='headerContainer'>
                     <h3 onClick={() => toggle(2)}>Kolory</h3>
