@@ -63,6 +63,7 @@ export type ProductAddition = {
   rgba: [number, number, number, number];
   isDefault: boolean;
   addition: Addition;
+  active: boolean;
   productModel: ProductModel;
 };
 
