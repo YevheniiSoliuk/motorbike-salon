@@ -133,7 +133,7 @@ async function validateForm(request, context) {
   const { payload, method } = request;
 
   if (method !== 'post') return request;
-  const { name, modelMaterialIndex } = payload;
+  const { name, modelMaterialIndex, isDefault } = payload;
   const errors: any = {};
 
   if (!name || !name.trim().length) {
@@ -152,15 +152,19 @@ async function validateForm(request, context) {
     };
   }
 
+  if (isDefault) {
+    payload['rgba.3'] = 1;
+  }
+
   if (!payload['productModel.id']) {
     errors['productModel.id'] = {
-      message: 'Product model ID is required',
+      message: 'Product model is required',
     };
   }
 
   if (!payload['addition.id']) {
     errors['addition.id'] = {
-      message: 'Addition ID is required',
+      message: 'Addition is required',
     };
   }
 

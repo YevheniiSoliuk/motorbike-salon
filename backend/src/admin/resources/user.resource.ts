@@ -1,7 +1,6 @@
 import User from 'src/users/entities/user.entity';
 import { usersNavigation } from '../constants';
 import { getUser } from '../auth';
-import { randomUUID } from 'crypto';
 import { dataSource } from 'src/database/data-source';
 
 export const UserResource = {
@@ -128,8 +127,6 @@ async function validateForm(request, context) {
   if (Object.keys(errors).length) {
     throw new ValidationError(errors);
   }
-
-  request.payload.uuid = randomUUID();
 
   return request;
 }

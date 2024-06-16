@@ -37,10 +37,10 @@ export default class Addition extends BaseEntity implements AdditionDto {
   @JoinColumn({ name: 'imageId', referencedColumnName: 'id' })
   images: AdditionImage[];
 
-  @OneToMany(
-    () => ConfigurationAddition,
-    (configuration) => configuration.addition,
-  )
-  @JoinColumn({ name: 'configurationId', referencedColumnName: 'id' })
-  configuration: ConfigurationAddition[];
+  // @OneToMany(
+  //   () => ConfigurationAddition,
+  //   (configuration) => configuration.addition,
+  // )
+  // @JoinColumn({ name: 'configurationId', referencedColumnName: 'id' })
+  // configuration: ConfigurationAddition[];
 }

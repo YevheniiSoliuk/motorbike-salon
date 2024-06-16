@@ -1,16 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
-import AdditionDto from 'src/additions/dto/addition.dto';
+import { IsNumber, IsString } from 'class-validator';
 import ConfigurationDto from '../dto/configuration.dto';
+import ProductAdditionDto from 'src/products/product-addition/product-addition.dto';
+import { Exclude } from 'class-transformer';
 
 export default class ConfigurationAdditionDto {
   @ApiProperty()
   @IsNumber()
   id: number;
 
-  @ApiProperty({ type: AdditionDto })
+  @IsString()
+  @Exclude()
+  name: string;
+
+  @ApiProperty({ type: ProductAdditionDto })
   @IsNumber()
-  addition: AdditionDto;
+  productAddition: ProductAdditionDto;
 
   @ApiProperty({ type: () => ConfigurationDto })
   @IsNumber()

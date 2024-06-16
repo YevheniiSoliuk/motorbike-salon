@@ -21,6 +21,9 @@ import { authenticate } from './auth';
 import { afterFileUpload } from './features/file';
 
 import dotenv from 'dotenv';
+import { ConfigurationResource } from './resources/configuration.resource';
+import { ConfigurationAdditionResource } from './resources/configuration-addition.resource';
+import PDFGenerator from './components/PDFGenerator';
 
 dotenv.config();
 
@@ -42,6 +45,22 @@ export default async function initAdminPanel(
     ColorPicker: componentLoader.add(
       'ColorPicker',
       './components/ColorPicker/index',
+    ),
+    ProductAdditionSelect: componentLoader.add(
+      'ProductAdditionSelect',
+      './components/ProductAdditionSelect',
+    ),
+    ConfigurationProductAdditionsTable: componentLoader.add(
+      'ConfigurationProductAdditionsTable',
+      './components/ConfigurationProductAdditionsTable',
+    ),
+    UserDataForm: componentLoader.add(
+      'UserDataForm',
+      './components/UserDataForm',
+    ),
+    PDFGenerator: componentLoader.add(
+      'PDFGenerator',
+      './components/PDFGenerator',
     ),
   };
 
@@ -85,6 +104,12 @@ export default async function initAdminPanel(
       ImageResource(uploadFeature, componentLoader, uploadFileFeature),
       ModelResource(uploadFeature, componentLoader, uploadFileFeature),
       GuarantyResource,
+      ConfigurationResource(
+        Components.UserDataForm,
+        Components.ConfigurationProductAdditionsTable,
+        Components.PDFGenerator,
+      ),
+      ConfigurationAdditionResource(Components.ProductAdditionSelect),
     ],
     locale: locale,
     componentLoader,

@@ -18,6 +18,7 @@ import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { GuarantyModule } from './guaranty/guaranty.module';
 import { GcloudModule } from './gcloud/gcloud.module';
+import { PdfTemplatesModule } from './pdf-templates/pdf-templates.module';
 
 @Module({
   imports: [
@@ -82,6 +83,7 @@ import { GcloudModule } from './gcloud/gcloud.module';
     RolesModule,
     GuarantyModule,
     GcloudModule,
+    PdfTemplatesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

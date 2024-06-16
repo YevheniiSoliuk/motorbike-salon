@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -24,10 +25,29 @@ export default class Configuration
   id: number;
 
   @Column('uuid', { unique: true, nullable: false })
+  @Generated('uuid')
   uuid: UUID;
+
+  @Column('varchar', { nullable: true, unique: true })
+  name: string;
 
   @Column('varchar', { unique: true, nullable: true })
   fileUrl: string;
+
+  @Column('varchar', { unique: false, nullable: true })
+  clientFirstName: string;
+
+  @Column('varchar', { unique: false, nullable: true })
+  clientLastName: string;
+
+  @Column('varchar', { unique: true, nullable: true })
+  clientEmail: string;
+
+  @Column('varchar', { unique: true, nullable: true })
+  clientPhone: string;
+
+  @Column('varchar', { unique: true, nullable: true })
+  clientIPAddress: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
@@ -37,12 +57,12 @@ export default class Configuration
   @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
   product: Product;
 
-  @OneToMany(
-    () => ConfigurationAddition,
-    (configurationAddition) => configurationAddition.configuration,
-  )
-  @JoinColumn({ name: 'additionId', referencedColumnName: 'id' })
-  additions: ConfigurationAddition[];
+  // @OneToMany(
+  //   () => ConfigurationAddition,
+  //   (configurationAddition) => configurationAddition.configuration,
+  // )
+  // @JoinColumn({ name: 'additionId', referencedColumnName: 'id' })
+  // additions: ConfigurationAddition[];
 
   @CreateDateColumn({ name: 'createdAt' })
   createdAt: Date;

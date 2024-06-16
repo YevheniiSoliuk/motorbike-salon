@@ -55,6 +55,14 @@ async function bootstrap() {
   await initAdminPanel(app);
 
   /**
+   * View Engine
+   */
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(
+    join(__dirname, '..', 'src', 'pdf-templates', 'templates'),
+  );
+  app.setViewEngine('hbs');
+  /**
    * i18next
    */
   // const __dirname = dirname(

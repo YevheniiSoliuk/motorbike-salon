@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>App</title>
+  </head>
+  <style>
+    body {
+      font-size: 8px;
+      line-height: 12px;
+      font-weight: 400;
+      color: #000;
+
+      margin: 0;
+      padding: 0;
+
+      box-sizing: border-box;
+
+      min-width: 700px;
+    }
+
+    .header {
+      width: 700px;
+      height: 100%;
+
+      margin-right: auto;
+      margin-left: 0;
+    }
+
+    .name {
+      margin-bottom: 10px;
+    }
+
+    .offer {
+      margin-left: 16px;
+    }
+
+    .logo {
+      margin-left: auto;
+      margin-right: 0;
+    }
+  </style>
+  <body>
+    <div class="header">
+      <div>
+        <h3 class="name">{{ configuration.name }}</h3>
+        <span>Propozycja od {{ configuration.updatedAt }}</span>
+        <span class="offer">Numer propozycji {{ configuration.id }}</span>
+      </div>
+      <div class="logo">
+        <img src="https://firebasestorage.googleapis.com/v0/b/motorcycle-salon.appspot.com/o/motorbike.png?alt=media&token=2676a6f2-18a1-45ab-925c-63651df6c35f" alt="logo" />
+      </div>
+    </div>
+  </body>
+</html>

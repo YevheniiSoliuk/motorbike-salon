@@ -146,7 +146,7 @@ async function validateForm(request, context) {
 
   if (!payload['category.id']) {
     errors['category.id'] = {
-      message: 'Category ID is required',
+      message: 'Category is required',
     };
   }
 

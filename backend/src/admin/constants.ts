@@ -41,3 +41,8 @@ export const additionsNavigation = {
   name: 'Additions',
   icon: 'Paperclip',
 };
+
+export const configurationsNavigation = {
+  name: 'Configurations',
+  icon: 'FileText',
+};

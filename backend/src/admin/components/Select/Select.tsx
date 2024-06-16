@@ -3,18 +3,31 @@ import ReactSelect, { ActionMeta } from 'react-select';
 import { UISelectVContainer, selectStyles } from './style';
 import { UIHelperText, UILabel } from '../styles';
 
-type NestedKeyOf<ObjectType extends object> = {
-  [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
-    ? `${Key}` | `${Key}.${NestedKeyOf<ObjectType[Key]>}`
-    : `${Key}`;
-}[keyof ObjectType & (string | number)];
+type Digit = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+type NextDigit = [1, 2, 3, 4, 5, 6, 7, 'STOP'];
+type Inc<T> = T extends Digit ? NextDigit[T] : 'STOP';
+type StringOrNumKeys<T> = keyof T & (string | number);
+type NestedPath<TValue, Prefix extends string, TDepth> = TValue extends object
+  ? `${Prefix}.${TDepth extends 'STOP' ? any : NestedFieldPaths<TValue, TDepth>}`
+  : never;
+type NestedFieldPaths<TData = any, TDepth = 0> = {
+  [TKey in StringOrNumKeys<TData>]:
+    | `${TKey}`
+    | NestedPath<TData[TKey], `${TKey}`, Inc<TDepth>>;
+}[StringOrNumKeys<TData>];
 
-interface SelectProps<T extends object> {
+// type NestedKeyOf<ObjectType extends object> = {
+//   [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
+//     ? `${Key}` | `${Key}.${NestedKeyOf<ObjectType[Key]>}`
+//     : `${Key}`;
+// }[keyof ObjectType & (string | number)];
+
+interface SelectProps<T extends object, D extends number> {
   values: T[];
   value: T;
   setValue: Dispatch<SetStateAction<T>>;
   onClearValue?: () => void;
-  fields: NestedKeyOf<T>[];
+  fields: NestedFieldPaths<T, D>[];
   required: boolean;
   isLoading?: boolean;
   placeholder: string;
@@ -23,7 +36,7 @@ interface SelectProps<T extends object> {
   hasError: boolean;
 }
 
-const Select = <T extends object>({
+const Select = <T extends object, D extends number>({
   values,
   value,
   setValue,
@@ -35,7 +48,7 @@ const Select = <T extends object>({
   label,
   error,
   hasError,
-}: SelectProps<T>) => {
+}: SelectProps<T, D>) => {
   function getNestedValue<T>(
     obj: T | null,
     deep: number,
@@ -53,7 +66,7 @@ const Select = <T extends object>({
 
   const concatObjectValues = (
     object: T | null,
-    objectFields: NestedKeyOf<T>[],
+    objectFields: NestedFieldPaths<T, D>[],
   ) => {
     let fieldValue = '';
 

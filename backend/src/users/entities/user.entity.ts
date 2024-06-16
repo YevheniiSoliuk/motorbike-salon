@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  Generated,
   JoinColumn,
   OneToMany,
   OneToOne,
@@ -18,6 +19,7 @@ export default class User extends BaseEntity implements UserDto {
   id: number;
 
   @Column('uuid', { unique: true, nullable: false })
+  @Generated('uuid')
   uuid: UUID;
 
   @Column('varchar', { nullable: true })
@@ -28,6 +30,9 @@ export default class User extends BaseEntity implements UserDto {
 
   @Column('varchar', { unique: true, nullable: false })
   email: string;
+
+  @Column('varchar', { unique: true, nullable: true })
+  oneTimePassword: string;
 
   @Column('varchar', { nullable: false })
   passwordHash: string;

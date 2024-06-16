@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import Configuration from './entities/configuration.entity';
 import { ProductsModule } from 'src/products/products.module';
 import { UsersModule } from 'src/users/users.module';
-import { AdditionsModule } from 'src/additions/additions.module';
 import ConfigurationAdditionService from './configuration-addition/configuration-addition.service';
 import ConfigurationAddition from './configuration-addition/configuration-addition.entity';
 
@@ -14,7 +13,6 @@ import ConfigurationAddition from './configuration-addition/configuration-additi
     TypeOrmModule.forFeature([Configuration, ConfigurationAddition]),
     ProductsModule,
     UsersModule,
-    AdditionsModule,
   ],
   controllers: [ConfigurationsController],
   providers: [ConfigurationsService, ConfigurationAdditionService],

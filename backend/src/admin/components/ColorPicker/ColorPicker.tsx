@@ -8,7 +8,7 @@ const MAX_COLOR_AMOUNT = 255;
 const ColorPicker = (props) => {
   const [color, setColor] = useState('');
 
-  const hexToSrgb = (hex) => {
+  const hexToSrgb = (hex: string) => {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
       ? {
@@ -19,7 +19,7 @@ const ColorPicker = (props) => {
       : null;
   };
 
-  function rgbToHex(r, g, b) {
+  function rgbToHex(r: number, g: number, b: number) {
     return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
   }
 
@@ -38,7 +38,7 @@ const ColorPicker = (props) => {
     props.record.params['rgba.0'] = rgb.r / MAX_COLOR_AMOUNT;
     props.record.params['rgba.1'] = rgb.g / MAX_COLOR_AMOUNT;
     props.record.params['rgba.2'] = rgb.b / MAX_COLOR_AMOUNT;
-    props.record.params['rgba.3'] = 1;
+    props.record.params['rgba.3'] = 0;
   };
 
   const hasError = useMemo(() => {
