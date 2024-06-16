@@ -64,6 +64,7 @@ export type ProductAddition = {
   isDefault: boolean;
   addition: Addition;
   productModel: ProductModel;
+  active: boolean;
 };
 
 export type Product = {

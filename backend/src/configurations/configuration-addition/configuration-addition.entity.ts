@@ -1,13 +1,14 @@
 import {
   BaseEntity,
+  Column,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import ConfigurationAdditionDto from './configuration-addition.dto';
-import Addition from 'src/additions/entities/addition.entity';
 import Configuration from '../entities/configuration.entity';
+import ProductAddition from 'src/products/product-addition/product-addition.entity';
 
 @Entity()
 export default class ConfigurationAddition
@@ -17,9 +18,12 @@ export default class ConfigurationAddition
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Addition)
-  @JoinColumn({ name: 'additionId', referencedColumnName: 'id' })
-  addition: Addition;
+  @Column('varchar', { nullable: true, unique: true })
+  name: string;
+
+  @ManyToOne(() => ProductAddition)
+  @JoinColumn({ name: 'productAdditionId', referencedColumnName: 'id' })
+  productAddition: ProductAddition;
 
   @ManyToOne(() => Configuration)
   @JoinColumn({ name: 'configurationId', referencedColumnName: 'id' })

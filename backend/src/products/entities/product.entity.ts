@@ -12,7 +12,6 @@ import ProductDto from '../dto/product.dto';
 import Category from 'src/categories/entities/category.entity';
 import Discount from 'src/discounts/entities/discount.entity';
 import ProductImage from 'src/images/product-image/product-image.entity';
-import ProductAddition from '../product-addition/product-addition.entity';
 import ProductModel from '../product-model/product-model.entity';
 import ProductGuaranty from '../product-guaranty/product-guaranty.entity';
 

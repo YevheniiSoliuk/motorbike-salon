@@ -112,7 +112,7 @@ async function validateForm(request, context) {
 
   if (!fromDate) {
     errors.fromDate = {
-      message: 'fromDateRequiredError',
+      message: 'From date is required',
     };
   }
 

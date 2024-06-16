@@ -1,12 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsBoolean,
-  IsNumber,
-  IsOptional,
-  IsString,
-  IsUUID,
-} from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 import { UUID } from 'crypto';
 import ProductAdditionDto from 'src/products/product-addition/product-addition.dto';
 
@@ -27,8 +21,8 @@ export default class AdditionDto {
   @IsNumber()
   price: number;
 
-  @ApiPropertyOptional({ type: () => [ProductAdditionDto] })
-  @IsOptional()
-  @Type(() => ProductAdditionDto)
-  products: ProductAdditionDto[];
+  // @ApiPropertyOptional({ type: () => [ProductAdditionDto] })
+  // @IsOptional()
+  // @Type(() => ProductAdditionDto)
+  // products: ProductAdditionDto[];
 }

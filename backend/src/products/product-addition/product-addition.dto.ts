@@ -6,6 +6,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 import AdditionDto from 'src/additions/dto/addition.dto';
 import { Exclude } from 'class-transformer';
@@ -29,8 +30,11 @@ export default class ProductAdditionDto {
   @IsNumber()
   id: number;
 
+  @ApiProperty()
+  @IsUUID(4)
+  uuid: string;
+
   @IsString()
-  @Exclude()
   name: string;
 
   @ApiPropertyOptional()

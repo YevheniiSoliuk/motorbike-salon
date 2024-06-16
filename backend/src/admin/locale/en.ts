@@ -68,5 +68,17 @@ export const en = {
         'image.id': 'Image',
       },
     },
+    Configuration: {
+      properties: {
+        'product.id': 'Product',
+        'user.id': 'User',
+      },
+    },
+    ConfigurationAddition: {
+      properties: {
+        'productAddition.id': 'Product Addition',
+        'configuration.id': 'Configuration',
+      },
+    },
   },
 };

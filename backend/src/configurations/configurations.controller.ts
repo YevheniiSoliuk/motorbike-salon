@@ -20,12 +20,17 @@ import { Response } from 'express';
 import ConfigurationDto from './dto/configuration.dto';
 import { UUID } from 'crypto';
 import { plainToInstance } from 'class-transformer';
+import ConfigurationAdditionService from './configuration-addition/configuration-addition.service';
+import ConfigurationAdditionDto from './configuration-addition/configuration-addition.dto';
 
 @ApiTags('Configurations')
 @Controller('configurations')
 @ApiBearerAuth('JWT-auth')
 export class ConfigurationsController {
-  constructor(private readonly configurationsService: ConfigurationsService) {}
+  constructor(
+    private readonly configurationsService: ConfigurationsService,
+    private readonly configurationAdditionService: ConfigurationAdditionService,
+  ) {}
 
   @UseGuards(JwtGuard)
   @ApiBody({ type: CreateConfigurationDto })
@@ -38,6 +43,34 @@ export class ConfigurationsController {
     await this.configurationsService.create(createConfigurationDto);
 
     res.sendStatus(HttpStatus.OK);
+  }
+
+  @ApiResponse({ type: ConfigurationDto })
+  @Get(':id')
+  async getById(@Param('id') id: string, @Res() res: Response) {
+    const configurations = await this.configurationsService.findOneById(+id);
+
+    res.status(HttpStatus.OK).json(
+      plainToInstance(ConfigurationDto, configurations, {
+        strategy: 'exposeAll',
+      }),
+    );
+  }
+
+  @ApiResponse({ type: ConfigurationDto })
+  @Get(':id/additions')
+  async getConfigurationAdditionsById(
+    @Param('id') id: string,
+    @Res() res: Response,
+  ) {
+    const configurationAdditions =
+      await this.configurationAdditionService.findByConfigurationId(+id);
+
+    res.status(HttpStatus.OK).json(
+      plainToInstance(ConfigurationAdditionDto, configurationAdditions, {
+        strategy: 'exposeAll',
+      }),
+    );
   }
 
   @UseGuards(JwtGuard)

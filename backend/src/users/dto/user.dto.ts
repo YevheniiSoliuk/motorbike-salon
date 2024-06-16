@@ -26,6 +26,10 @@ export default class UserDto {
   @IsEmail()
   email: string;
 
+  @ApiProperty()
+  @IsString()
+  oneTimePassword: string;
+
   @IsHash('sha512')
   @Exclude()
   passwordHash: string;

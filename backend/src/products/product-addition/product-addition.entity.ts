@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  Generated,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -20,6 +21,10 @@ export default class ProductAddition
 {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column('varchar', { unique: true, nullable: true })
+  @Generated('uuid')
+  uuid: string;
 
   @Column('varchar', { nullable: false, unique: true })
   name: string;

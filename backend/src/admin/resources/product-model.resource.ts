@@ -97,13 +97,13 @@ async function validateForm(request, context) {
 
   if (!payload['product.id']) {
     errors['product.id'] = {
-      message: 'Product ID is required',
+      message: 'Product is required',
     };
   }
 
   if (!payload['model.id']) {
     errors['model.id'] = {
-      message: 'Model ID is required',
+      message: 'Model is required',
     };
   }
 

@@ -38,6 +38,15 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @ApiResponse({ type: UserDto })
+  @Get(':id')
+  async getUser(@Param('id') id: string, @Res() res: Response) {
+    const user = await this.usersService.findOneById(+id);
+    res
+      .status(HttpStatus.OK)
+      .json(plainToInstance(UserDto, user, { strategy: 'exposeAll' }));
+  }
+
   @UseGuards(JwtGuard)
   @ApiResponse({ type: UserDto })
   @Get(':uuid')
