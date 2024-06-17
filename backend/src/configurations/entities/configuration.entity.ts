@@ -53,6 +53,10 @@ export default class Configuration
   @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
   user: User;
 
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'createdById', referencedColumnName: 'id' })
+  createdBy: User;
+
   @ManyToOne(() => Product)
   @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
   product: Product;

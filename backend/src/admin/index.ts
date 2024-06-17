@@ -24,6 +24,7 @@ import dotenv from 'dotenv';
 import { ConfigurationResource } from './resources/configuration.resource';
 import { ConfigurationAdditionResource } from './resources/configuration-addition.resource';
 import PDFGenerator from './components/PDFGenerator';
+import { LOGO_URL } from './constants';
 
 dotenv.config();
 
@@ -82,7 +83,7 @@ export default async function initAdminPanel(
   const AdminJSExpress = await import('@adminjs/express');
   const adminPanel = new AdminJS({
     branding: {
-      logo: 'https://firebasestorage.googleapis.com/v0/b/motorcycle-salon.appspot.com/o/motorbike.png?alt=media&token=2676a6f2-18a1-45ab-925c-63651df6c35f',
+      logo: LOGO_URL,
       companyName: 'MotorCycle',
       withMadeWithLove: true,
     },

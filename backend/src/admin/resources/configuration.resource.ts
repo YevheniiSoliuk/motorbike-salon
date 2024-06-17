@@ -23,10 +23,18 @@ export const ConfigurationResource = (
       'userIPAddress',
       'createdAt',
       'updatedAt',
+      'createdBy',
       'productAdditionsTable',
     ],
     editProperties: ['name', 'product.id', 'user.id', 'userDataForm'],
-    filterProperties: ['name', 'product', 'user', 'createdAt', 'updatedAt'],
+    filterProperties: [
+      'name',
+      'product',
+      'user',
+      'createdAt',
+      'updatedAt',
+      'createdBy',
+    ],
     properties: {
       product: {
         type: 'string',
@@ -35,6 +43,12 @@ export const ConfigurationResource = (
         },
       },
       user: {
+        type: 'string',
+        isVisible: {
+          edit: false,
+        },
+      },
+      createdBy: {
         type: 'string',
         isVisible: {
           edit: false,
@@ -118,6 +132,12 @@ async function formatRecord(params) {
     params.user = `${configuration.user.firstName} ${configuration.user.lastName}`;
   }
 
+  if (!configuration.createdBy) {
+    params.createdBy = 'N/A';
+  } else {
+    params.createdBy = `${configuration.createdBy.firstName} ${configuration.createdBy.lastName}`;
+  }
+
   if (!configuration.product) {
     params.product = 'N/A';
   } else {
@@ -186,6 +206,11 @@ async function validateForm(request, context) {
   ) {
     const user = await createUser({ firstName, lastName, email });
     payload['user.id'] = user.id;
+  }
+
+  if (!payload['createdBy.id']) {
+    const user = await getUserByEmail(context.currentAdmin.email);
+    payload['createdBy.id'] = user.id;
   }
 
   return request;
