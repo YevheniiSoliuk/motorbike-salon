@@ -22,7 +22,12 @@ export class ConfigurationsService {
 
   async findOneById(id: number) {
     return await this.configurationRepository.findOne({
-      relations: ['user', 'product.models.additions.addition'],
+      relations: [
+        'user',
+        'createdBy',
+        'product.models.additions.addition.images.image',
+        'product.images.image',
+      ],
       where: {
         id,
       },

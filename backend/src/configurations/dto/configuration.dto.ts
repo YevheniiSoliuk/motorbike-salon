@@ -52,6 +52,10 @@ export default class ConfigurationDto {
   @Type(() => UserDto)
   user: UserDto;
 
+  @ApiPropertyOptional({ type: UserDto })
+  @Type(() => UserDto)
+  createdBy: UserDto;
+
   @ApiProperty({ type: ProductDto })
   @Type(() => ProductDto)
   product: ProductDto;
