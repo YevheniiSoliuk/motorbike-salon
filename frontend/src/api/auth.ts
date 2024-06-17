@@ -6,3 +6,16 @@ export const login = async (email: string, password: string) => {
     password,
   });
 };
+export const signup = async (
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+) => {
+  return await api.post('/auth/register', {
+    firstName,
+    lastName,
+    email,
+    password,
+  });
+};

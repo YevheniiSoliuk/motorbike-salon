@@ -80,6 +80,9 @@ export type Product = {
   guaranties: any;
   images: ItemImage[];
 };
+export type AdditionAddition = {
+  uuid: string;
+};
 
 export const fetchProducts = async () => {
   return await api.get('/products');

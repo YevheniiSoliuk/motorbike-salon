@@ -11,6 +11,9 @@ import {
   Redirect,
   HashRouter,
 } from 'react-router-dom';
+import Login from './Login';
+import Signup from './Signup';
+import Dashboard from './Dashboard';
 
 const App = () => {
   // const RouteMaker = () => {
@@ -59,8 +62,8 @@ const App = () => {
                   </Link>
                 </li>
                 <li className='topBarOption'>
-                  <Link to='#' className='headerText'>
-                    News
+                  <Link to='/signup' className='headerText'>
+                    Logowanie
                   </Link>
                 </li>
               </ul>
@@ -82,6 +85,15 @@ const App = () => {
         </Route>
         <Route exact path={'/summary'}>
           <Summary />
+        </Route>
+        <Route exact path={'/dashboard'}>
+          <Dashboard />
+        </Route>
+        <Route exact path={'/login'}>
+          <Login />
+        </Route>
+        <Route exact path={'/signup'}>
+          <Signup />
         </Route>
       </Switch>
 

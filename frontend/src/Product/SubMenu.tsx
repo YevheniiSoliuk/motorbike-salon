@@ -58,7 +58,6 @@ const SubMenu = ({
 
       return element;
     });
-    console.log(optionList);
 
     //setOptionList(() => tab);
   };
