@@ -65,7 +65,6 @@ export type ProductAddition = {
   addition: Addition;
   active: boolean;
   productModel: ProductModel;
-  active: boolean;
 };
 
 export type Product = {
