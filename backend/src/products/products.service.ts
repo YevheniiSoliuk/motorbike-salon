@@ -57,6 +57,21 @@ export class ProductsService {
     });
   }
 
+  async findProductAdditionByUuid(productAdditionUuid: UUID) {
+    const productModel = await this.productModelRepository.findOne({
+      relations: ['additions.addition.images.image'],
+      where: {
+        additions: {
+          uuid: productAdditionUuid,
+        },
+      },
+    });
+
+    return productModel.additions.find(
+      (addition) => addition.uuid === productAdditionUuid,
+    );
+  }
+
   async getModelById(id: number) {
     return await this.productModelRepository.findOne({
       relations: ['model'],

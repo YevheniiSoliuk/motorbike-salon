@@ -62,6 +62,11 @@ export default class ProductAdditionDto {
   @IsBoolean()
   isDefault: boolean;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  active: boolean;
+
   @ApiProperty({ type: () => ProductModelDto })
   productModel: ProductModelDto;
 

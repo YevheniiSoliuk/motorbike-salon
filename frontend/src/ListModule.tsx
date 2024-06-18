@@ -34,12 +34,14 @@ const ListModule = () => {
   return (
     <div
       style={{
+        width: '100%',
         display: 'flex',
-        flexDirection: 'column',
+        gap: '48px',
+        flexWrap: 'wrap',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         height: 'calc(100vh - 205px)',
-        margin: 'auto auto 0',
+        margin: 0,
       }}
     >
       {models.length ? models : <h1>No products</h1>}
