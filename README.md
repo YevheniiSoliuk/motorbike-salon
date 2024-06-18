@@ -22,3 +22,13 @@ After that you will have availability to go to
 6. In the Connection tab, fill in the following details:
 ![General pgadmin server settings page](/images/connection.png)
 7. Click Save to save the server configuration.
+
+## How to start frontend service
+Paste into terminal below command
+  ```
+  npm install
+  ```
+After that
+  ```
+  npm start
+  ```
