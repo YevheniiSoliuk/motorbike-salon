@@ -127,7 +127,7 @@ async function validateForm(request, context) {
     errors.price = {
       message: 'Price amount must be a number',
     };
-  } else if (price < 1) {
+  } else if (price < 0) {
     errors.price = {
       message: 'Price amount must be positive',
     };
