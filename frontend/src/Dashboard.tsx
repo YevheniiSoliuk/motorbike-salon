@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Configuration, getUserConfigurations } from './api/configurations';
 import { AxiosResponse } from 'axios';
 import { format } from 'date-fns';
+import './Sass/Dashboard.scss';
 
 const Dashboard = () => {
   const history = useHistory();
@@ -26,7 +27,7 @@ const Dashboard = () => {
   const configurationsRows = useMemo(() => {
     if (!configurations.length) {
       return (
-        <div>
+        <div className='.no-info-container'>
           <h3>No configurations available</h3>
           <span>We couldn't find any created configurations for you.</span>{' '}
           <Link to='/models'>Let's create one</Link>
@@ -43,31 +44,75 @@ const Dashboard = () => {
 
       return (
         <tr>
-          <td>{index + 1}</td>
-          <td>{configuration.name}</td>
-          <td>{format(new Date(configuration.createdAt), 'dd/MM/yyyy')}</td>
-          <td>{format(new Date(configuration.updatedAt), 'dd/MM/yyyy')}</td>
-          <td>{`${totalPrice} PLN`}</td>
+          <td>
+            <div
+              className={
+                index === configurations.length - 1
+                  ? 'ui-tr-last-td-first'
+                  : 'ui-td'
+              }
+            >
+              {index + 1}
+            </div>
+          </td>
+          <td>
+            <div className='ui-td'>{configuration.name}</div>
+          </td>
+          <td>
+            <div className='ui-td'>
+              {format(new Date(configuration.createdAt), 'dd/MM/yyyy')}
+            </div>
+          </td>
+          <td>
+            <div className='ui-td'>
+              {format(new Date(configuration.updatedAt), 'dd/MM/yyyy')}
+            </div>
+          </td>
+          <td>
+            <div
+              className={
+                index === configurations.length - 1
+                  ? 'ui-tr-last-td-last'
+                  : 'ui-td'
+              }
+            >{`${totalPrice} PLN`}</div>
+          </td>
         </tr>
       );
     });
   }, [configurations]);
 
   return (
-    <div>
+    <div className='page-container'>
+      <Link to='/models' className='goBack' style={{ marginLeft: '24px' }}>
+        <img src='/photos/more.png' alt='models' id='moreIcon' />
+        <span>Modele</span>
+      </Link>
       <h2>Configurations</h2>
-      <table>
-        <thead>
-          <th>
-            <td>#</td>
-            <td>Configuration Name</td>
-            <td>Created At</td>
-            <td>Updatet At</td>
-            <td>Total Price</td>
-          </th>
-        </thead>
-        <tbody>{configurationsRows}</tbody>
-      </table>
+      <div className='table-container'>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <div className='ui-th ui-tr-first-td-first'>#</div>
+              </th>
+              <th>
+                <div className='ui-th'>Configuration Name</div>
+              </th>
+              <th>
+                <div className='ui-th'>Created At</div>
+              </th>
+              <th>
+                <div className='ui-th'>Updatet At</div>
+              </th>
+              <th>
+                <div className='ui-th ui-tr-first-td-last'>Total Price</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>{configurationsRows}</tbody>
+        </table>
+      </div>
     </div>
   );
 };
