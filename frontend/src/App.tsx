@@ -66,10 +66,7 @@ const App = () => {
                   <img src='./photos/motorbike.png' alt='logo' />
                 </li>
                 <li className='topBarOption'>
-                  <Link
-                    to={isAuthorised ? '/dashboard' : '/login'}
-                    className='headerText'
-                  >
+                  <Link to={'/dashboard'} className='headerText'>
                     Konfiguracje
                   </Link>
                 </li>

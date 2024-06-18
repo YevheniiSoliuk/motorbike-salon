@@ -24,7 +24,7 @@ const Dashboard = () => {
   }, [history]);
 
   const configurationsRows = useMemo(() => {
-    if (configurations.length) {
+    if (!configurations.length) {
       return (
         <div>
           <h3>No configurations available</h3>
