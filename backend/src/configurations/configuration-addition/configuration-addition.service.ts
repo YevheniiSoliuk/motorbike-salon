@@ -15,6 +15,7 @@ export default class ConfigurationAdditionService {
 
   async create(configuration: Configuration, productAddition: ProductAddition) {
     const configurationAddition = this.configurationAdditionRepository.create({
+      name: `${productAddition.name} for ${configuration.name}`,
       configuration,
       productAddition,
     });
@@ -23,7 +24,13 @@ export default class ConfigurationAdditionService {
 
   async findByConfigurationId(configurationId: number) {
     return await this.configurationAdditionRepository.find({
-      relations: ['configuration', 'productAddition.addition'],
+      relations: [
+        'configuration.user.role',
+        'productAddition.addition.images.image',
+        'configuration.createdBy.role',
+        'configuration.product.models.additions.addition.images.image',
+        'configuration.product.images.image',
+      ],
       where: {
         configuration: { id: configurationId },
       },

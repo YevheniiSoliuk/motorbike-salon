@@ -61,12 +61,12 @@ export default class Configuration
   @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
   product: Product;
 
-  // @OneToMany(
-  //   () => ConfigurationAddition,
-  //   (configurationAddition) => configurationAddition.configuration,
-  // )
-  // @JoinColumn({ name: 'additionId', referencedColumnName: 'id' })
-  // additions: ConfigurationAddition[];
+  @OneToMany(
+    () => ConfigurationAddition,
+    (configurationAddition) => configurationAddition.configuration,
+  )
+  @JoinColumn({ name: 'additionId', referencedColumnName: 'id' })
+  additions: ConfigurationAddition[];
 
   @CreateDateColumn({ name: 'createdAt' })
   createdAt: Date;

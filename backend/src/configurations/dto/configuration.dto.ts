@@ -4,6 +4,7 @@ import { IsNumber, IsOptional, IsString, IsUUID, IsUrl } from 'class-validator';
 import { UUID } from 'crypto';
 import ProductDto from 'src/products/dto/product.dto';
 import UserDto from 'src/users/dto/user.dto';
+import ConfigurationAdditionDto from '../configuration-addition/configuration-addition.dto';
 
 export default class ConfigurationDto {
   @ApiProperty()
@@ -15,7 +16,6 @@ export default class ConfigurationDto {
   uuid: UUID;
 
   @IsString()
-  @Exclude()
   name: string;
 
   @ApiPropertyOptional()
@@ -60,7 +60,7 @@ export default class ConfigurationDto {
   @Type(() => ProductDto)
   product: ProductDto;
 
-  // @ApiProperty({ type: () => [ConfigurationAdditionDto] })
-  // @Type(() => ConfigurationAdditionDto)
-  // additions: ConfigurationAdditionDto[];
+  @ApiProperty({ type: () => [ConfigurationAdditionDto] })
+  @Type(() => ConfigurationAdditionDto)
+  additions: ConfigurationAdditionDto[];
 }

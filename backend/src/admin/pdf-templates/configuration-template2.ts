@@ -1,5 +1,3 @@
-import { Template } from '@pdfme/common';
-
 type ItemImage = {
   content: string;
   position: {
@@ -11,17 +9,14 @@ type ItemImage = {
 type TemplateProps = {
   isMoreThanThreeElemInTable: boolean;
   baseItemsImages: ItemImage[];
-  additionalItemsImages: ItemImage[];
 };
 
 const getTemplate: ({
   isMoreThanThreeElemInTable,
   baseItemsImages,
-  additionalItemsImages,
 }: TemplateProps) => any = ({
   isMoreThanThreeElemInTable,
   baseItemsImages,
-  additionalItemsImages,
 }) => {
   const baseImages = {} as Object;
   baseItemsImages.forEach((baseItemImage, index) => {
@@ -39,26 +34,6 @@ const getTemplate: ({
       },
     });
   });
-
-  const additionalImages = {} as Object;
-  additionalItemsImages.forEach((additionalImage, index) => {
-    Object.assign(additionalImages, {
-      [`itemImage${index + 1}`]: {
-        type: 'readOnlyImage',
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-off"><line x1="2" x2="22" y1="2" y2="22"/><path d="M10.41 10.41a2 2 0 1 1-2.83-2.83"/><line x1="13.5" x2="6" y1="13.5" y2="21"/><line x1="18" x2="21" y1="12" y2="15"/><path d="M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59"/><path d="M21 15V5a2 2 0 0 0-2-2H9"/></svg>',
-        content: additionalImage.content,
-        position: additionalImage.position,
-        width: 23,
-        height: 23,
-        rotate: 0,
-        opacity: 1,
-        readOnly: true,
-      },
-    });
-  });
-
-  console.log(baseImages);
-  console.log(additionalImages);
 
   return {
     schemas: [
@@ -193,7 +168,7 @@ const getTemplate: ({
         baseConfigurationTitle: {
           type: 'readOnlyText',
           icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>',
-          content: 'Base configuration',
+          content: 'Configuration',
           position: { x: 10, y: 165.79 },
           width: 190,
           height: 10,
@@ -215,7 +190,7 @@ const getTemplate: ({
           width: 190,
           height: 62.1048,
           showHead: true,
-          head: ['Image', 'Nname', 'Price', 'Total'],
+          head: ['Image', 'Name', 'Price', 'Total'],
           headWidthPercentages: [17, 45, 19, 19],
           fontName: 'NotoSerifJP-Regular',
           tableStyles: { borderWidth: 0, borderColor: '#000000' },
@@ -277,169 +252,7 @@ const getTemplate: ({
         pageNumber: {
           type: 'readOnlyText',
           icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>',
-          content: 'Page 1 from 3',
-          position: { x: 160, y: isMoreThanThreeElemInTable ? 320 : 270 },
-          width: 45,
-          height: 6,
-          rotate: 0,
-          alignment: 'left',
-          verticalAlignment: 'bottom',
-          fontSize: 10,
-          lineHeight: 1,
-          characterSpacing: 0,
-          fontColor: '#000000',
-          backgroundColor: '',
-          opacity: 1,
-          readOnly: true,
-          fontName: 'NotoSerifJP-Regular',
-        },
-      },
-      {
-        logo: {
-          type: 'image',
-          position: { x: 180, y: 10 },
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-off"><line x1="2" x2="22" y1="2" y2="22"/><path d="M10.41 10.41a2 2 0 1 1-2.83-2.83"/><line x1="13.5" x2="6" y1="13.5" y2="21"/><line x1="18" x2="21" y1="12" y2="15"/><path d="M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59"/><path d="M21 15V5a2 2 0 0 0-2-2H9"/></svg>',
-          width: 20,
-          height: 20,
-          rotate: 0,
-          opacity: 1,
-        },
-        modelName: {
-          type: 'text',
-          position: { x: 10, y: 10 },
-          width: 130,
-          height: 10,
-          rotate: 0,
-          alignment: 'left',
-          verticalAlignment: 'middle',
-          fontSize: 14,
-          lineHeight: 1,
-          characterSpacing: 0,
-          fontColor: '#000000',
-          backgroundColor: '',
-          opacity: 1,
-          fontName: 'NotoSerifJP-Regular',
-        },
-        offerFromDate: {
-          type: 'text',
-          position: { x: 10, y: 20 },
-          width: 130,
-          height: 6,
-          rotate: 0,
-          alignment: 'left',
-          verticalAlignment: 'middle',
-          fontSize: 10,
-          lineHeight: 1,
-          characterSpacing: 0,
-          fontColor: '#000000',
-          backgroundColor: '',
-          opacity: 1,
-          fontName: 'NotoSerifJP-Regular',
-        },
-        offerNumber: {
-          type: 'text',
-          position: { x: 10, y: 26 },
-          width: 130,
-          height: 6,
-          rotate: 0,
-          alignment: 'left',
-          verticalAlignment: 'middle',
-          fontSize: 10,
-          lineHeight: 1,
-          characterSpacing: 0,
-          fontColor: '#000000',
-          backgroundColor: '',
-          opacity: 1,
-          fontName: 'NotoSerifJP-Regular',
-        },
-        additionalConfigurationTitle: {
-          type: 'readOnlyText',
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>',
-          content: 'Additional configuration',
-          position: { x: 10, y: 53 },
-          width: 190,
-          height: 10,
-          rotate: 0,
-          alignment: 'left',
-          verticalAlignment: 'top',
-          fontSize: 18,
-          lineHeight: 1,
-          characterSpacing: 0,
-          fontColor: '#000000',
-          backgroundColor: '',
-          opacity: 1,
-          readOnly: true,
-          fontName: 'NotoSerifJP-Regular',
-        },
-        additionalConfigurationTable: {
-          type: 'table',
-          position: { x: 10, y: 64 },
-          width: 190,
-          height: 62.1048,
-          showHead: true,
-          head: ['Image', 'Name', 'Price', 'Total'],
-          headWidthPercentages: [17, 45, 19, 19],
-          fontName: 'NotoSerifJP-Regular',
-          tableStyles: { borderWidth: 0.2, borderColor: '#000000' },
-          headStyles: {
-            fontName: 'NotoSerifJP-Regular',
-            fontSize: 13,
-            characterSpacing: 0,
-            alignment: 'center',
-            verticalAlignment: 'middle',
-            lineHeight: 1,
-            fontColor: '#2f40d6',
-            borderColor: '#2f40d6',
-            backgroundColor: '#d7daf7',
-            borderWidth: { top: 0.2, right: 0.2, bottom: 0.2, left: 0.2 },
-            padding: { top: 2, right: 2, bottom: 2, left: 2 },
-          },
-          bodyStyles: {
-            fontName: 'NotoSerifJP-Regular',
-            fontSize: 13,
-            characterSpacing: 0,
-            alignment: 'center',
-            verticalAlignment: 'middle',
-            lineHeight: 3,
-            fontColor: '#000000',
-            borderColor: '#000000',
-            backgroundColor: '#ffffff',
-            alternateBackgroundColor: '#ffffff',
-            borderWidth: { top: 0.2, right: 0.2, bottom: 0.2, left: 0.2 },
-            padding: { top: 2, right: 2, bottom: 2, left: 2 },
-          },
-          columnStyles: {
-            alignment: {
-              '0': 'center',
-              '1': 'left',
-              '2': 'center',
-              '3': 'center',
-            },
-          },
-        },
-        ...additionalImages,
-        creatorName: {
-          type: 'text',
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>',
-          content: 'Creator name',
-          position: { x: 10, y: isMoreThanThreeElemInTable ? 320 : 270 },
-          width: 60,
-          height: 6,
-          rotate: 0,
-          alignment: 'left',
-          verticalAlignment: 'bottom',
-          fontSize: 10,
-          lineHeight: 1,
-          characterSpacing: 0,
-          fontColor: '#000000',
-          backgroundColor: '',
-          opacity: 1,
-          fontName: 'NotoSerifJP-Regular',
-        },
-        pageNumber: {
-          type: 'readOnlyText',
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>',
-          content: 'Page 2 from 3',
+          content: 'Page 1 from 2',
           position: { x: 160, y: isMoreThanThreeElemInTable ? 320 : 270 },
           width: 45,
           height: 6,
@@ -538,7 +351,7 @@ const getTemplate: ({
           width: 190,
           height: 43.75920000000001,
           showHead: true,
-          head: ['Configuration name', 'Total'],
+          head: ['Name', 'Total'],
           headWidthPercentages: [67.25613086103682, 32.74386913896316],
           fontName: 'NotoSerifJP-Regular',
           tableStyles: { borderWidth: 0, borderColor: '#000000' },
@@ -627,7 +440,7 @@ const getTemplate: ({
         pageNumber: {
           type: 'readOnlyText',
           icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>',
-          content: 'Page 3 from 3',
+          content: 'Page 1 from 2',
           position: { x: 160, y: isMoreThanThreeElemInTable ? 320 : 270 },
           width: 45,
           height: 6,

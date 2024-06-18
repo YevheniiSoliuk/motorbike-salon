@@ -14,8 +14,17 @@ import {
 import Login from './Login';
 import Signup from './Signup';
 import Dashboard from './Dashboard';
+import { useMemo } from 'react';
+import Logout from './Logout';
 
 const App = () => {
+  const isAuthorised = useMemo(() => {
+    const accessToken = localStorage.getItem('access-token');
+    const userUuid = localStorage.getItem('uuid');
+
+    return accessToken && userUuid;
+  }, []);
+
   // const RouteMaker = () => {
   //   const route = list.map((item) => {
   //     return (
@@ -57,14 +66,21 @@ const App = () => {
                   <img src='./photos/motorbike.png' alt='logo' />
                 </li>
                 <li className='topBarOption'>
-                  <Link to='#' className='headerText'>
-                    Technologia
+                  <Link
+                    to={isAuthorised ? '/dashboard' : '/login'}
+                    className='headerText'
+                  >
+                    Konfiguracje
                   </Link>
                 </li>
                 <li className='topBarOption'>
-                  <Link to='/signup' className='headerText'>
-                    Logowanie
-                  </Link>
+                  {isAuthorised ? (
+                    <Logout />
+                  ) : (
+                    <Link to='/login' className='headerText'>
+                      Logowanie
+                    </Link>
+                  )}
                 </li>
               </ul>
             </nav>

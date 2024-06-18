@@ -24,7 +24,7 @@ export class ConfigurationsService {
     return await this.configurationRepository.findOne({
       relations: [
         'user',
-        'createdBy',
+        'createdBy.role',
         'product.models.additions.addition.images.image',
         'product.images.image',
       ],
@@ -45,7 +45,12 @@ export class ConfigurationsService {
 
   async findByUserUuid(userUuid: UUID) {
     return await this.configurationRepository.find({
-      relations: ['user', 'product'],
+      relations: [
+        'user',
+        'createdBy.role',
+        'product.models.additions.addition.images.image',
+        'product.images.image',
+      ],
       where: {
         user: {
           uuid: userUuid,
@@ -55,29 +60,32 @@ export class ConfigurationsService {
   }
 
   async create(createConfigurationDto: CreateConfigurationDto) {
-    const { userUuid, productUuid } = createConfigurationDto;
+    const { userUuid, productUuid, productAdditionsUUIDs } =
+      createConfigurationDto;
     const product = await this.productsService.findOneByUuid(productUuid);
     const user = await this.usersService.findOneByUuid(userUuid);
-    const uuid = randomUUID();
     const configurationAdditions: ConfigurationAddition[] = [];
 
     const configurationData = this.configurationRepository.create({
-      uuid,
+      name: `${product.name} Configuration for ${user.firstName} ${user.lastName}`,
       product,
       user,
+      createdBy: user,
     });
 
-    // const configuration = await configurationData.save();
+    const configuration = await configurationData.save();
 
-    // for (const productAdditionUuid of productAdditionsUUIDs) {
-    //   const addition =
-    //     await this.productsService.findOneByUuid(productAdditionUuid);
-    //   const configurationAddition =
-    //     await this.configurationAdditionService.create(configuration, addition);
-    //   configurationAdditions.push(configurationAddition);
-    // }
+    for (const productAdditionUuid of productAdditionsUUIDs) {
+      const addition =
+        await this.productsService.findProductAdditionByUuid(
+          productAdditionUuid,
+        );
+      const configurationAddition =
+        await this.configurationAdditionService.create(configuration, addition);
+      configurationAdditions.push(configurationAddition);
+    }
 
-    // configuration.additions = configurationAdditions;
+    configuration.additions = configurationAdditions;
     await configurationData.save();
   }
 

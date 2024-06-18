@@ -44,6 +44,9 @@ export default class ProductAddition
   @Column('bool', { default: false })
   isDefault: boolean;
 
+  @Column('bool', { default: false })
+  active: boolean;
+
   @ManyToOne(() => ProductModel, (productModel) => productModel.additions)
   @JoinColumn({ name: 'productModelId', referencedColumnName: 'id' })
   productModel: ProductModel;

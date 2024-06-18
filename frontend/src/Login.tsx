@@ -38,8 +38,8 @@ const Login = () => {
             localStorage.setItem('uuid', data.uuid);
             setLoginStatus('User successfully logged in.');
             setTimeout(() => {
-              history.push('/dashboard');
-            }, 2000);
+              history.push('/models');
+            }, 1000);
           }
         })
         .catch((error) => {

@@ -75,7 +75,7 @@ export class ConfigurationsController {
 
   @UseGuards(JwtGuard)
   @ApiResponse({ type: ConfigurationDto })
-  @Get(':userUuid')
+  @Get('user/:userUuid')
   async getByUser(@Param('userUuid') userUuid: UUID, @Res() res: Response) {
     const configurations =
       await this.configurationsService.findByUserUuid(userUuid);

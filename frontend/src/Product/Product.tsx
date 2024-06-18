@@ -4,7 +4,7 @@ import Price from './Price';
 import Photo from './Photo';
 import Summary from '../Summary';
 import App from '../App';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import {
   Route,
   Switch,
@@ -22,6 +22,7 @@ import {
 import { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { access } from 'fs';
+import { createConfiguration } from '../api/configurations';
 
 // interface TestProps {
 //   order?: {
@@ -35,6 +36,7 @@ import { access } from 'fs';
 
 const Dropdown: React.FC = () => {
   const params = useParams<{ productId: string }>();
+  const history = useHistory();
   const [firstMenu, setFirstMenu] = useState<boolean>(true);
   const [secondMenu, setSecondMenu] = useState<boolean>(true);
   const [thirdMenu, setThirdMenu] = useState<boolean>(true);
@@ -104,63 +106,31 @@ const Dropdown: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [addition, setAddition] = useState<string[]>([]);
   var additionStatic: any = [];
+
   const handleSendConfiguration = async () => {
-    if (product != null) {
-      product.models[0].additions.find((addition) => {
-        // if (!addition.active && addition.isDefault) {
-        //   addition.active = true;
-        //   console.log(addition.addition);
-        //   setAddition((prev) => [...prev, addition.addition.uuid]);
-        // } else if (!addition.hasOwnProperty('active')) {
-        //   addition.active = false;
-        // }
+    if (product === null) {
+      return;
+    }
 
-        if (addition.active) {
-          setAddition((prev) => [...prev, addition.addition.uuid]);
-          additionStatic.push(addition.addition.uuid);
-        }
-        if (!addition.hasOwnProperty('active') && addition.isDefault) {
-          setAddition((prev) => [...prev, addition.addition.uuid]);
-          additionStatic.push(addition.addition.uuid);
-        }
+    if (!color || !material) {
+      return;
+    }
+
+    const userUuid = localStorage.getItem('uuid');
+
+    if (!userUuid) {
+      history.push('/login');
+      return;
+    }
+
+    try {
+      await createConfiguration({
+        userUuid,
+        productUuid: product.uuid,
+        productAdditionsUUIDs: [color.uuid, material.uuid],
       });
-
-      if (localStorage.getItem('uuid') != undefined) {
-        console.log(localStorage.getItem('access-token'));
-        console.log(localStorage.getItem('refresh-token'));
-
-        try {
-          const response = await axios.post(
-            configurationSaveEndpoint,
-            {
-              userUuid: localStorage.getItem('uuid'),
-              productUuid: product.uuid,
-              additionsUUIDs: additionStatic,
-            },
-            {
-              headers: {
-                'access-token': localStorage.getItem('access-token'),
-                'refresh-token': localStorage.getItem('refresh-token'),
-              },
-            },
-          );
-
-          additionStatic = [];
-          console.log(response);
-
-          //setAddition(['']);
-          // product.models[0].additions.find((addition) => {
-          //   // if (addition.isDefault) {
-          //   //   addition.active = true;
-          //   // } else {
-          //   //   addition.active = false;
-          //   // }
-          // });
-          // console.log(response.data);
-        } catch (error) {
-          console.error(error);
-        }
-      }
+    } catch (error) {
+      console.log(error);
     }
   };
   useEffect(() => {

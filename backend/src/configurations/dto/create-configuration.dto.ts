@@ -11,9 +11,9 @@ export default class CreateConfigurationDto {
   @IsUUID(4)
   productUuid: UUID;
 
-  // @ApiProperty()
-  // @IsArray({ each: true })
-  // @ArrayUnique()
-  // @ArrayNotEmpty()
-  // productAdditionsUUIDs: UUID[];
+  @ApiProperty()
+  @IsArray({ each: true })
+  @ArrayUnique()
+  @ArrayNotEmpty()
+  productAdditionsUUIDs: UUID[];
 }

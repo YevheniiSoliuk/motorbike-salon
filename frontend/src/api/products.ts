@@ -57,6 +57,7 @@ export type ProductModel = {
 
 export type ProductAddition = {
   id: number;
+  uuid: string;
   modelMaterialIndex: number;
   modelPartType: ModelPartType;
   modelTextureType: ModelTextureType;
